@@ -8,6 +8,7 @@ if (!isset($_SESSION['user'])) {
 require_once "functions.php";
 
 $allProducts = getAllProducts();
+$cartItems = getCartItems(); $cartCount = count($cartItems);
 ?>
 
 <!DOCTYPE html>
@@ -34,8 +35,9 @@ $allProducts = getAllProducts();
             <a href="userprofile.php">
                 <img src="img/user.png" alt="user" class="w-8 h-8 hover:opacity-75">
             </a>
-            <a href="cart.php">
-                <img src="img/cart.png" alt="cart" class="w-8 h-8 hover:opacity-75">
+            <a href="cart.php" class="relative">
+                <img src="img/cart.png" class="w-8 h-8">
+                <span class="absolute -top-2 -right-2 text-xs bg-red-600 text-white rounded-full px-1"><?= $cartCount ?></span>
             </a>
             <a href="logout.php" class="bg-black text-white px-8 py-2 rounded hover:bg-gray-800">Logout</a>
         </div>
@@ -108,8 +110,12 @@ $allProducts = getAllProducts();
                 <div class="border rounded-lg p-3 shadow hover:shadow-lg transition">
                     <img src="<?= htmlspecialchars($product['image_url']) ?>" alt="<?= htmlspecialchars($product['name']) ?>" class="w-full h-48 object-cover rounded">
                     <p class="mt-2 font-medium"><?= htmlspecialchars($product['name']) ?></p>
-                    <p class="text-sm text-gray-600">Rs. <?= number_format($product['price'], 2) ?></p>
-                    <a href="cart.php" class="mt-2 bg-black text-white px-4 py-1 text-sm rounded hover:bg-gray-600">Add to Cart</a>
+                    <p class="text-sm text-gray-600">LKR <?= number_format($product['price'], 2) ?></p>
+                    <form method="POST" action="route.php">
+                        <input type="hidden" name="action" value="add">
+                        <input type="hidden" name="product_id" value="<?= $product['id'] ?>">
+                        <button type="submit" class="mt-2 bg-black text-white px-4 py-1 text-sm rounded hover:bg-gray-600">Add to Cart</button>
+                    </form>
                 </div>
             <?php endforeach; ?>
         </div>

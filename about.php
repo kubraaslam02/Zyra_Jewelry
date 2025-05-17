@@ -4,6 +4,9 @@ if (!isset($_SESSION['user'])) {
     header("Location: login.php");
     exit();
 }
+
+require_once "functions.php";
+$cartItems = getCartItems(); $cartCount = count($cartItems);
 ?>
 
 <!DOCTYPE html>
@@ -30,8 +33,9 @@ if (!isset($_SESSION['user'])) {
             <a href="userprofile.php">
                 <img src="img/user.png" alt="user" class="w-8 h-8 hover:opacity-75">
             </a>
-            <a href="cart.php">
-                <img src="img/cart.png" alt="cart" class="w-8 h-8 hover:opacity-75">
+            <a href="cart.php" class="relative">
+                <img src="img/cart.png" class="w-8 h-8">
+                <span class="absolute -top-2 -right-2 text-xs bg-red-600 text-white rounded-full px-1"><?= $cartCount ?></span>
             </a>
             <a href="logout.php" class="bg-black text-white px-8 py-2 rounded hover:bg-gray-800">Logout</a>
         </div>
