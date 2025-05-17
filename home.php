@@ -42,27 +42,30 @@ $allProducts = getAllProducts();
     </nav>
 
     <!-- Main Image -->
-    <section>
+    <section class="relative">
         <img src="img/main-img.jpg" alt="main image" class="w-full h-[26rem] object-cover">
+        <div class="absolute inset-0 flex items-center justify-center">
+            <h1 class="text-9xl text-center font-style: italic">Zyra<br>Jewelry</h1>
+        </div>
     </section>
 
     <!-- Advertisements -->
     <section class="flex justify-center gap-4 my-8 px-4">
         <div class="relative w-80 h-32">
             <img src="img/ad-1.jpg" alt="advertisement1" class="w-full h-full object-cover rounded">
-            <div class="absolute top-2 left-2 text-black text-lg font-semibold px-4 py-4">
+            <div class="absolute top-2 left-2 text-lg font-semibold px-4 py-4">
                 Charm Rings
             </div>
         </div>
         <div class="relative w-80 h-32">
             <img src="img/ad-2.png" alt="advertisement1" class="w-full h-full object-cover rounded">
-            <div class="absolute top-2 left-2 text-black text-lg font-semibold px-4 py-4">
+            <div class="absolute top-2 left-2 text-lg font-semibold px-4 py-4">
                 Elegant Bracelets
             </div>
         </div>
         <div class="relative w-80 h-32">
             <img src="img/ad-3.jpeg" alt="advertisement1" class="w-full h-full object-cover rounded">
-            <div class="absolute top-2 left-2 text-black text-lg font-semibold px-4 py-4">
+            <div class="absolute top-2 left-2 text-lg font-semibold px-4 py-4">
                 Modern Earrings
             </div>
         </div>
@@ -144,10 +147,10 @@ $allProducts = getAllProducts();
         </div>
         <div>
             <h3 class="font-semibold mb-2">Quick Links</h3>
-            <a href="home.php" class="block">Home</a>
-            <a href="about.php" class="block">About Us</a>
-            <a href="products.php" class="block">Products</a>
-            <a href="membership.php" class="block">Membership</a>
+            <a href="home.php" class="block underline">Home</a>
+            <a href="about.php" class="block underline">About Us</a>
+            <a href="products.php" class="block underline">Products</a>
+            <a href="membership.php" class="block underline">Membership</a>
         </div>
         <div>
             <h3 class="font-semibold mb-2">Join the Mailing List</h3>
