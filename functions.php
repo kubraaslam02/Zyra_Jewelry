@@ -37,3 +37,9 @@ function registerUser($username, $email, $password) {
     $stmt->execute([$username, $email, $password]);
     return true;
 }
+
+function getAllProducts() {
+    $pdo = connectDB();
+    $stmt = $pdo->query("SELECT * FROM products");
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
