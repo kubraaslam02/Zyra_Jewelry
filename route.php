@@ -34,6 +34,24 @@ try {
         exit();
     }
 
+    elseif (isset($_POST['action'])) {
+        $action = $_POST['action'];
+        $productId = $_POST['product_id'] ?? null;
+        $quantity = $_POST['quantity'] ?? 1;
+
+        if ($action === 'add' && $productId) {
+            addToCart($productId, $quantity);
+        } elseif ($action === 'update' && $productId) {
+            updateQuantity($productId, $quantity);
+        } elseif ($action === 'remove' && $productId) {
+            removeFromCart($productId);
+        }
+
+        $referrer = $_SERVER['HTTP_REFERER'] ?? 'home.php'; // Redirect back to where the user came from
+        header("Location: $referrer");
+        exit();
+    }
+
     else {
         header("Location: login.php");
         exit();
