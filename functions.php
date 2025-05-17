@@ -43,3 +43,10 @@ function getAllProducts() {
     $stmt = $pdo->query("SELECT * FROM products");
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
+
+function getProductsByCategory($category) {
+    $pdo = connectDB();
+    $stmt = $pdo->prepare("SELECT * FROM products WHERE category = ?");
+    $stmt->execute([$category]);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
