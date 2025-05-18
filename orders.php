@@ -27,10 +27,10 @@ $orders = getUserOrders();
             <a href="home.php">
                 <img src="img/logo.png" alt="logo" class="w-32 h-32">
             </a>
-            <a href="home.php" class="px-3 py-1 hover:bg-gray-200 <?php echo basename($_SERVER['PHP_SELF']) == 'home.php' ? 'font-bold text-black underline' : ''; ?>">Home</a>
-            <a href="about.php" class="px-3 py-1 hover:bg-gray-200 <?php echo basename($_SERVER['PHP_SELF']) == 'about.php' ? 'font-bold text-black underline' : ''; ?>">About Us</a>
-            <a href="products.php" class="px-3 py-1 hover:bg-gray-200 <?php echo basename($_SERVER['PHP_SELF']) == 'products.php' ? 'font-bold text-black underline' : ''; ?>">Products</a>
-            <a href="membership.php" class="px-3 py-1 hover:bg-gray-200 <?php echo basename($_SERVER['PHP_SELF']) == 'membership.php' ? 'font-bold text-black underline' : ''; ?>">Membership</a>
+            <a href="home.php" class="px-3 py-1 hover:bg-gray-200">Home</a>
+            <a href="about.php" class="px-3 py-1 hover:bg-gray-200">About Us</a>
+            <a href="products.php" class="px-3 py-1 hover:bg-gray-200">Products</a>
+            <a href="membership.php" class="px-3 py-1 hover:bg-gray-200">Membership</a>
         </div>
         <div class="flex items-center space-x-8 px-6">
             <a href="userprofile.php">
