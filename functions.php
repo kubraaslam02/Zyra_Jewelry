@@ -16,7 +16,7 @@ function loginUser($email, $password) {
     $user = $stmt->fetch();
 
     if ($user) {
-        $_SESSION['user'] = $user['email'];
+        $_SESSION['user'] = $user;
         return true;
     }
     return false;
@@ -58,7 +58,7 @@ function addToCart($productId, $quantity = 1) {
         throw new Exception("User not logged in.");
     }
 
-    $userEmail = $_SESSION['user'];
+    $userEmail = $_SESSION['user']['email'];
     $pdo = connectDB();
 
     // Check if product already in cart
@@ -82,7 +82,7 @@ function updateQuantity($productId, $quantity) {
     if (!isset($_SESSION['user'])) {
         throw new Exception("User not logged in.");
     }
-    $userEmail = $_SESSION['user'];
+    $userEmail = $_SESSION['user']['email'];
     $pdo = connectDB();
 
     if ($quantity > 0) {
@@ -99,7 +99,7 @@ function removeFromCart($productId) {
     if (!isset($_SESSION['user'])) {
         throw new Exception("User not logged in.");
     }
-    $userEmail = $_SESSION['user'];
+    $userEmail = $_SESSION['user']['email'];
     $pdo = connectDB();
 
     $stmt = $pdo->prepare("DELETE FROM cart WHERE user_email = ? AND product_id = ?");
@@ -107,13 +107,14 @@ function removeFromCart($productId) {
 }
 
 function getCartItems() {
-    if (!isset($_SESSION['user'])) {
+    if (!isset($_SESSION['user']) || !is_array($_SESSION['user']) || !isset($_SESSION['user']['email'])) {
+        // User not logged in properly or session corrupted
         return [];
     }
-    $userEmail = $_SESSION['user'];
+
+    $userEmail = $_SESSION['user']['email'];
     $pdo = connectDB();
 
-    // Join cart with products to get product info + quantity
     $stmt = $pdo->prepare("
         SELECT p.*, c.quantity
         FROM cart c
@@ -131,4 +132,20 @@ function calculateCartSubtotal() {
         $subtotal += $item['price'] * $item['quantity'];
     }
     return $subtotal;
+}
+
+function getUserId() {
+    return $_SESSION['user']['id'] ?? null;
+}
+
+function clearCart() {
+    if (!isset($_SESSION['user'])) {
+        throw new Exception("User not logged in.");
+    }
+
+    $userEmail = $_SESSION['user']['email'];
+    $pdo = connectDB();
+
+    $stmt = $pdo->prepare("DELETE FROM cart WHERE user_email = ?");
+    $stmt->execute([$userEmail]);
 }

@@ -52,6 +52,43 @@ try {
         exit();
     }
 
+    elseif (isset($_POST['place_order'])) {
+        $userId = $_SESSION['user']['id'];
+
+        // Billing Info
+        $email = $_POST['email'];
+        $address = $_POST['address'];
+
+        // Payment Info
+        $paymentMethod = $_POST['payment_method'];
+
+        // Cart details
+        $cartItems = getCartItems();
+        $subtotal = calculateCartSubtotal();
+
+        // Insert into orders table
+        $orderDate = date('Y-m-d H:i:s');
+        $deliveryDate = date('Y-m-d H:i:s', strtotime('+14 days'));
+
+        $conn = connectDB(); // assumes function from functions.php
+        $stmt = $conn->prepare("INSERT INTO orders (user_id, email, address, order_date, delivery_date, total, payment_method) VALUES (?, ?, ?, ?, ?, ?, ?)");
+        $stmt->execute([$userId, $email, $address, $orderDate, $deliveryDate, $subtotal, $paymentMethod]);
+        $orderId = $conn->lastInsertId();
+
+        // Insert items into order_items
+        $stmtItem = $conn->prepare("INSERT INTO order_items (order_id, product_id, quantity, unit_price) VALUES (?, ?, ?, ?)");
+        foreach ($cartItems as $item) {
+            $stmtItem->execute([$orderId, $item['id'], $item['quantity'], $item['price']]);
+        }
+
+        // Clear the cart
+        clearCart();
+
+        // Redirect to thank you
+        // header("Location: thankyou.php?order_id=" . $orderId);
+        // exit();
+    }
+
     else {
         header("Location: login.php");
         exit();
