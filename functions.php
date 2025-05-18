@@ -149,3 +149,33 @@ function clearCart() {
     $stmt = $pdo->prepare("DELETE FROM cart WHERE user_email = ?");
     $stmt->execute([$userEmail]);
 }
+
+//OrderHistory
+
+function getUserOrders() {
+    if (!isset($_SESSION['user'])) {
+        return [];
+    }
+
+    $pdo = connectDB();
+    $userEmail = $_SESSION['user']['email'];
+
+    $ordersStmt = $pdo->prepare("SELECT * FROM orders WHERE email = ?");
+    $ordersStmt->execute([$userEmail]);
+    $orders = $ordersStmt->fetchAll(PDO::FETCH_ASSOC);
+
+    foreach ($orders as &$order) {
+        $orderId = $order['id'];
+
+        $itemsStmt = $pdo->prepare("
+            SELECT p.name, p.image_url, oi.quantity
+            FROM order_items oi
+            JOIN products p ON oi.product_id = p.id
+            WHERE oi.order_id = ?
+        ");
+        $itemsStmt->execute([$orderId]);
+        $order['items'] = $itemsStmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    return $orders;
+}
