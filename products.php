@@ -12,7 +12,8 @@ $ringProducts = getProductsByCategory('rings');
 $earringProducts = getProductsByCategory('earrings');
 $braceletProducts = getProductsByCategory('bracelets');
 $necklaceProducts = getProductsByCategory('necklaces');
-$cartItems = getCartItems(); $cartCount = count($cartItems);
+$cartItems = getCartItems(); 
+$cartCount = count($cartItems);
 ?>
 
 <!DOCTYPE html>

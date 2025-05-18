@@ -6,7 +6,8 @@ if (!isset($_SESSION['user'])) {
 }
 
 require_once "functions.php";
-$cartItems = getCartItems(); $cartCount = count($cartItems);
+$cartItems = getCartItems(); 
+$cartCount = count($cartItems);
 ?>
 
 <!DOCTYPE html>

@@ -5,8 +5,7 @@ if (!isset($_SESSION['user'])) {
     exit();
 }
 
-include "functions.php";
-$cartItems = getCartItems(); $cartCount = count($cartItems);
+require_once "functions.php";
 // Ensure cart exists
 if (!isset($_SESSION['cart'])) {
     $_SESSION['cart'] = [];
@@ -14,6 +13,7 @@ if (!isset($_SESSION['cart'])) {
 
 // Get cart items with details
 $cartItems = getCartItems();
+$cartCount = count($cartItems);
 $subtotal = calculateCartSubtotal();
 ?>
 
