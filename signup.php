@@ -19,7 +19,6 @@ unset($_SESSION['error']);
    <div class="w-full max-w-sm font-serif">
     <!-- Title -->
      <h2 class="text-2xl font-bold mb-4">Sign up</h2>
-     <br>
 
       <!-- Error Message -->
       <?php if ($error): ?>
