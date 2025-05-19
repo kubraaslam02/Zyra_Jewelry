@@ -67,7 +67,7 @@ $cartCount = count($cartItems);
             </div>
         </div>
         <div class="relative w-80 h-32">
-            <img src="img/ad-3.jpeg" alt="advertisement1" class="w-full h-full object-cover rounded">
+            <img src="img/products/butterfly-pearl-earring.jpeg" alt="advertisement1" class="w-full h-full object-cover rounded">
             <div class="absolute top-2 left-2 text-lg font-semibold px-4 py-4">
                 Modern Earrings
             </div>
@@ -84,17 +84,17 @@ $cartCount = count($cartItems);
             </a>
 
             <a href="products.php" class="flex flex-col items-center">
-                <img src="img/cat-2.png" alt="Earrings" class="w-24 h-24 object-cover rounded-full mb-2 hover:opacity-80 transition">
+                <img src="img/products/gem-earring.png" alt="Earrings" class="w-24 h-24 object-cover rounded-full mb-2 hover:opacity-80 transition">
                 <span class="text-sm font-medium">Earrings</span>
             </a>
 
             <a href="products.php" class="flex flex-col items-center">
-                <img src="img/cat-3.png" alt="Bracelets" class="w-24 h-24 object-cover rounded-full mb-2 hover:opacity-80 transition">
+                <img src="img/products/pearl-flower-bracelet.png" alt="Bracelets" class="w-24 h-24 object-cover rounded-full mb-2 hover:opacity-80 transition">
                 <span class="text-sm font-medium">Bracelets</span>
             </a>
 
             <a href="products.php" class="flex flex-col items-center">
-                <img src="img/cat-4.png" alt="Necklaces" class="w-24 h-24 object-cover rounded-full mb-2 hover:opacity-80 transition">
+                <img src="img/products/diamond-necklace.png" alt="Necklaces" class="w-24 h-24 object-cover rounded-full mb-2 hover:opacity-80 transition">
                 <span class="text-sm font-medium">Necklaces</span>
             </a>
         </div>
@@ -107,7 +107,13 @@ $cartCount = count($cartItems);
             <a href="products.php" class="text-sm bg-black text-white px-3 py-2 rounded hover:bg-gray-800">View More >></a>
         </div>
         <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
-            <?php foreach ($allProducts as $product): ?>
+            <?php
+            // Pick 5 random products
+            $randomProducts = $allProducts;
+            shuffle($randomProducts);
+            $randomProducts = array_slice($randomProducts, 0, 5);
+
+            foreach ($randomProducts as $product): ?>
                 <div class="border rounded-lg p-3 shadow hover:shadow-lg transition">
                     <img src="<?= htmlspecialchars($product['image_url']) ?>" alt="<?= htmlspecialchars($product['name']) ?>" class="w-full h-48 object-cover rounded">
                     <p class="mt-2 font-medium"><?= htmlspecialchars($product['name']) ?></p>
@@ -121,6 +127,7 @@ $cartCount = count($cartItems);
             <?php endforeach; ?>
         </div>
     </section>
+
 
     <!-- About Zyra -->
     <section class="flex items-center justify-center my-12 px-6">

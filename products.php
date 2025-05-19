@@ -54,7 +54,13 @@ $cartCount = count($cartItems);
             <h2 class="text-3xl font-bold text-center">Special Offer</h2>
         </div>
         <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
-            <?php foreach ($allProducts as $product): ?>
+            <?php
+            // Pick 5 random products
+            $randomOfferProducts = $allProducts;
+            shuffle($randomOfferProducts);
+            $randomOfferProducts = array_slice($randomOfferProducts, 0, 5);
+
+            foreach ($randomOfferProducts as $product): ?>
                 <div class="border rounded-lg p-3 shadow hover:shadow-lg transition">
                     <img src="<?= htmlspecialchars($product['image_url']) ?>" alt="<?= htmlspecialchars($product['name']) ?>" class="w-full h-48 object-cover rounded">
                     <p class="mt-2 font-medium"><?= htmlspecialchars($product['name']) ?></p>
