@@ -7,18 +7,19 @@ unset($_SESSION['error']);
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Signup</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+  <meta charset="UTF-8">
+  <title>Signup</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
+
 <body class="min-h-screen flex">
   <!-- Left section (form) -->
-   <div class="w-1/2 flex flex-col justify-center items-center bg-white">
+  <div class="w-1/2 flex flex-col justify-center items-center bg-white">
     <!-- Logo -->
-   <img src="img/logo.png" alt="logo" class="w-48 h-48">
-   <div class="w-full max-w-sm font-serif">
-    <!-- Title -->
-     <h2 class="text-2xl font-bold mb-4">Sign up</h2>
+    <img src="img/logo.png" alt="logo" class="w-48 h-48">
+    <div class="w-full max-w-sm font-serif">
+      <!-- Title -->
+      <h2 class="text-2xl font-bold mb-4">Sign up</h2>
 
       <!-- Error Message -->
       <?php if ($error): ?>
@@ -40,10 +41,12 @@ unset($_SESSION['error']);
         <div>
           <label class="block text-sm font-medium">Password:</label>
           <input type="password" name="password" required class="w-full p-2 rounded-xl bg-gray-200 focus:outline-none" />
-        </div><br>
+        </div>
+        <br>
+
         <button type="submit" name="signup" class="w-1/2 py-2 mx-auto block bg-black text-white hover:bg-gray-800">Create Account</button>
       </form>
-      <br><br>
+      <br>
       <!-- Sign up link -->
       <p class="mt-4 text-sm">Already have an account? <a href="login.php" class="underline text-black">Login</a></p>
       <br>
@@ -51,6 +54,6 @@ unset($_SESSION['error']);
   </div>
 
   <!-- Right section (advertisement) -->
-   <img src="img/signup-ad.jpg" alt="signup-advertisement" class="fixed top-0 right-0 w-1/2 h-screen object-cover">
+  <img src="img/signup-ad.jpg" alt="signup-advertisement" class="fixed top-0 right-0 w-1/2 h-screen object-cover">
 </body>
 </html>
