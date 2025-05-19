@@ -89,7 +89,7 @@ $cartCount = count($cartItems);
             </div>
         </div>
         <div class="w-80">
-            <img src="img/ad-3.jpeg" alt="advertisement3" class="w-full h-32 object-cover">
+            <img src="img/products/butterfly-pearl-earring.jpeg" alt="advertisement3" class="w-full h-32 object-cover">
             <div class="text-lg text-center mt-2">
                 Custom & gift-worthy pieces
             </div>
