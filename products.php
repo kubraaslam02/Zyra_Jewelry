@@ -65,7 +65,11 @@ $cartCount = count($cartItems);
                     <img src="<?= htmlspecialchars($product['image_url']) ?>" alt="<?= htmlspecialchars($product['name']) ?>" class="w-full h-48 object-cover rounded">
                     <p class="mt-2 font-medium"><?= htmlspecialchars($product['name']) ?></p>
                     <p class="text-sm text-gray-600">LKR <?= number_format($product['price'], 2) ?></p>
-                    <a href="cart.php" class="mt-2 bg-black text-white px-4 py-1 text-sm rounded hover:bg-gray-600">Add to Cart</a>
+                    <form method="POST" action="route.php" class="add-to-cart-form">
+                        <input type="hidden" name="action" value="add">
+                        <input type="hidden" name="product_id" value="<?= $product['id'] ?>">
+                        <button type="submit" class="mt-2 bg-black text-white px-4 py-1 text-sm rounded hover:bg-gray-600">Add to Cart</button>
+                    </form>
                 </div>
             <?php endforeach; ?>
         </div>
@@ -82,7 +86,11 @@ $cartCount = count($cartItems);
                     <img src="<?= htmlspecialchars($product['image_url']) ?>" alt="<?= htmlspecialchars($product['name']) ?>" class="w-full h-48 object-cover rounded">
                     <p class="mt-2 font-medium"><?= htmlspecialchars($product['name']) ?></p>
                     <p class="text-sm text-gray-600">LKR <?= number_format($product['price'], 2) ?></p>
-                    <a href="cart.php" class="mt-2 bg-black text-white px-4 py-1 text-sm rounded hover:bg-gray-600">Add to Cart</a>
+                    <form method="POST" action="route.php" class="add-to-cart-form">
+                        <input type="hidden" name="action" value="add">
+                        <input type="hidden" name="product_id" value="<?= $product['id'] ?>">
+                        <button type="submit" class="mt-2 bg-black text-white px-4 py-1 text-sm rounded hover:bg-gray-600">Add to Cart</button>
+                    </form>
                 </div>
             <?php endforeach; ?>
         </div>
@@ -99,7 +107,11 @@ $cartCount = count($cartItems);
                     <img src="<?= htmlspecialchars($product['image_url']) ?>" alt="<?= htmlspecialchars($product['name']) ?>" class="w-full h-48 object-cover rounded">
                     <p class="mt-2 font-medium"><?= htmlspecialchars($product['name']) ?></p>
                     <p class="text-sm text-gray-600">LKR <?= number_format($product['price'], 2) ?></p>
-                    <a href="cart.php" class="mt-2 bg-black text-white px-4 py-1 text-sm rounded hover:bg-gray-600">Add to Cart</a>
+                    <form method="POST" action="route.php" class="add-to-cart-form">
+                        <input type="hidden" name="action" value="add">
+                        <input type="hidden" name="product_id" value="<?= $product['id'] ?>">
+                        <button type="submit" class="mt-2 bg-black text-white px-4 py-1 text-sm rounded hover:bg-gray-600">Add to Cart</button>
+                    </form>
                 </div>
             <?php endforeach; ?>
         </div>
@@ -116,7 +128,11 @@ $cartCount = count($cartItems);
                     <img src="<?= htmlspecialchars($product['image_url']) ?>" alt="<?= htmlspecialchars($product['name']) ?>" class="w-full h-48 object-cover rounded">
                     <p class="mt-2 font-medium"><?= htmlspecialchars($product['name']) ?></p>
                     <p class="text-sm text-gray-600">LKR <?= number_format($product['price'], 2) ?></p>
-                    <a href="cart.php" class="mt-2 bg-black text-white px-4 py-1 text-sm rounded hover:bg-gray-600">Add to Cart</a>
+                    <form method="POST" action="route.php" class="add-to-cart-form">
+                        <input type="hidden" name="action" value="add">
+                        <input type="hidden" name="product_id" value="<?= $product['id'] ?>">
+                        <button type="submit" class="mt-2 bg-black text-white px-4 py-1 text-sm rounded hover:bg-gray-600">Add to Cart</button>
+                    </form>
                 </div>
             <?php endforeach; ?>
         </div>
@@ -133,7 +149,11 @@ $cartCount = count($cartItems);
                     <img src="<?= htmlspecialchars($product['image_url']) ?>" alt="<?= htmlspecialchars($product['name']) ?>" class="w-full h-48 object-cover rounded">
                     <p class="mt-2 font-medium"><?= htmlspecialchars($product['name']) ?></p>
                     <p class="text-sm text-gray-600">LKR <?= number_format($product['price'], 2) ?></p>
-                    <a href="cart.php" class="mt-2 bg-black text-white px-4 py-1 text-sm rounded hover:bg-gray-600">Add to Cart</a>
+                    <form method="POST" action="route.php" class="add-to-cart-form">
+                        <input type="hidden" name="action" value="add">
+                        <input type="hidden" name="product_id" value="<?= $product['id'] ?>">
+                        <button type="submit" class="mt-2 bg-black text-white px-4 py-1 text-sm rounded hover:bg-gray-600">Add to Cart</button>
+                    </form>
                 </div>
             <?php endforeach; ?>
         </div>
@@ -170,5 +190,8 @@ $cartCount = count($cartItems);
             </form>
         </div>
     </footer>
+
+    <script src="script.js"></script>
+
 </body>
 </html>
