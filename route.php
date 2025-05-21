@@ -8,7 +8,7 @@ try {
         $password = $_POST['password'] ?? '';
 
         if (loginUser($email, $password)) {
-            header("Location: home.php");
+            header("Location: index.php");
             exit();
         } else {
             $_SESSION['error'] = "Invalid email or password.";
@@ -47,7 +47,7 @@ try {
             removeFromCart($productId);
         }
 
-        $referrer = $_SERVER['HTTP_REFERER'] ?? 'home.php'; // Redirect back to where the user came from
+        $referrer = $_SERVER['HTTP_REFERER'] ?? 'index.php'; // Redirect back to where the user came from
         header("Location: $referrer");
         exit();
     }
@@ -83,10 +83,6 @@ try {
 
         // Clear the cart
         clearCart();
-
-        // Redirect to thank you
-        // header("Location: thankyou.php?order_id=" . $orderId);
-        // exit();
     }
 
     else {

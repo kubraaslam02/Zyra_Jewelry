@@ -28,10 +28,10 @@ $cartCount = count($cartItems);
     <nav class="bg-white shadow flex items-center justify-between">
         <div class="flex items-center space-x-4">
             <!-- Logo -->
-            <a href="home.php">
+            <a href="index.php">
                 <img src="img/logo.png" alt="logo" class="w-32 h-32">
             </a>
-            <a href="home.php" class="px-3 py-1 hover:bg-gray-200 <?php echo basename($_SERVER['PHP_SELF']) == 'home.php' ? 'font-bold text-black underline' : ''; ?>">Home</a>
+            <a href="index.php" class="px-3 py-1 hover:bg-gray-200 <?php echo basename($_SERVER['PHP_SELF']) == 'index.php' ? 'font-bold text-black underline' : ''; ?>">Home</a>
             <a href="about.php" class="px-3 py-1 hover:bg-gray-200 <?php echo basename($_SERVER['PHP_SELF']) == 'about.php' ? 'font-bold text-black underline' : ''; ?>">About Us</a>
             <a href="products.php" class="px-3 py-1 hover:bg-gray-200 <?php echo basename($_SERVER['PHP_SELF']) == 'products.php' ? 'font-bold text-black underline' : ''; ?>">Products</a>
             <a href="membership.php" class="px-3 py-1 hover:bg-gray-200 <?php echo basename($_SERVER['PHP_SELF']) == 'membership.php' ? 'font-bold text-black underline' : ''; ?>">Membership</a>
@@ -177,7 +177,7 @@ $cartCount = count($cartItems);
         </div>
         <div>
             <h3 class="font-semibold mb-2">Quick Links</h3>
-            <a href="home.php" class="block underline">Home</a>
+            <a href="index.php" class="block underline">Home</a>
             <a href="about.php" class="block underline">About Us</a>
             <a href="products.php" class="block underline">Products</a>
             <a href="membership.php" class="block underline">Membership</a>
