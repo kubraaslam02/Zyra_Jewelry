@@ -67,8 +67,8 @@ try {
         $subtotal = calculateCartSubtotal();
 
         // Insert into orders table
-        $orderDate = date('Y-m-d H:i:s');
-        $deliveryDate = date('Y-m-d H:i:s', strtotime('+14 days'));
+        $orderDate = date('Y-m-d');
+        $deliveryDate = date('Y-m-d', strtotime('+14 days'));
 
         $conn = connectDB(); // assumes function from functions.php
         $stmt = $conn->prepare("INSERT INTO orders (user_id, email, address, order_date, delivery_date, total, payment_method) VALUES (?, ?, ?, ?, ?, ?, ?)");

@@ -44,29 +44,31 @@ $orders = getUserOrders();
         </div>
     </nav>
 
-    <h1 class="text-2xl font-semibold mb-6 p-6">Your Orders</h1>
-
-    <?php foreach ($orders as $order): ?>
-        <div class="bg-gray-300 rounded-xl p-4 mb-6">
-            <div class="flex flex-wrap justify-between text-sm font-medium mb-2">
-                <div>Order ID: <?= htmlspecialchars($order['id']) ?></div>
-                <div>Total Amount (LKR): <?= htmlspecialchars($order['total']) ?></div>
-                <div>Delivered to: <?= htmlspecialchars($order['address']) ?></div>
-                <div>Order Date: <?= htmlspecialchars($order['order_date']) ?></div>
-            </div>
-            <div class="border-t border-gray-400 mt-2 pt-3 text-sm">
-                <div class="mb-3 font-semibold">Delivered: <?= htmlspecialchars($order['delivery_date']) ?></div>
-                <div class="flex gap-6 flex-wrap">
-                    <?php foreach ($order['items'] as $item): ?>
-                        <div class="flex flex-col items-center w-28 text-center">
-                            <img src="<?= htmlspecialchars($item['image_url']) ?>" alt="<?= htmlspecialchars($item['name']) ?>" class="w-20 h-20 rounded-md mb-2 object-cover">
-                            <div class="text-sm font-medium"><?= htmlspecialchars($item['name']) ?></div>
-                        </div>
-                    <?php endforeach; ?>
+    <div class="p-12">
+        <h1 class="text-2xl font-semibold mb-6">Your Orders</h1>
+        
+        <?php foreach ($orders as $order): ?>
+            <div class="bg-gray-300 rounded-xl p-4 mb-6">
+                <div class="flex flex-wrap justify-between text-sm font-medium mb-2 p-6">
+                    <div>Order ID: <?= htmlspecialchars($order['id']) ?></div>
+                    <div>Total Amount (LKR): <?= htmlspecialchars($order['total']) ?></div>
+                    <div>Delivered to: <?= htmlspecialchars($order['address']) ?></div>
+                    <div>Order Date: <?= htmlspecialchars($order['order_date']) ?></div>
+                </div>
+                <div class="border-t border-gray-400 mt-2 pt-3 text-sm p-6">
+                    <div class="mb-3 font-semibold">Delivered: <?= htmlspecialchars($order['delivery_date']) ?></div>
+                    <div class="flex gap-6 flex-wrap">
+                        <?php foreach ($order['items'] as $item): ?>
+                            <div class="flex flex-col items-center w-28 text-center">
+                                <img src="<?= htmlspecialchars($item['image_url']) ?>" alt="<?= htmlspecialchars($item['name']) ?>" class="w-20 h-20 rounded-md mb-2 object-cover">
+                                <div class="text-sm font-medium"><?= htmlspecialchars($item['name']) ?></div>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
                 </div>
             </div>
-        </div>
-    <?php endforeach; ?>
+        <?php endforeach; ?>
+    </div>
 
     <!-- Footer -->
     <footer class="border-t-4 py-8 px-16 grid grid-cols-4 gap-4 text-sm">
