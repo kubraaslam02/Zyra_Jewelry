@@ -5,6 +5,11 @@ if (!isset($_SESSION['user'])) {
     exit();
 }
 
+if ($_SESSION['user']['usertype'] === 'admin') {
+    header("Location: admindashboardorders.php");
+    exit();
+}
+
 require_once "functions.php";
 
 $allProducts = getAllProducts();

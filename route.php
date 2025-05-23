@@ -8,13 +8,19 @@ try {
         $password = $_POST['password'] ?? '';
 
         if (loginUser($email, $password)) {
-            header("Location: index.php");
+            $usertype = $_SESSION['user']['usertype'] ?? 'user'; // default to 'user' if not set
+        
+            if ($usertype === 'admin') {
+                header("Location: admindashboardorders.php");
+            } else {
+                header("Location: index.php");
+            }
             exit();
-        } else {
+        }else {
             $_SESSION['error'] = "Invalid email or password.";
             header("Location: login.php");
             exit();
-        }
+        }    
     }
 
     elseif (isset($_POST['signup'])) {
