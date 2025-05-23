@@ -46,10 +46,10 @@ $cartCount = count($cartItems);
 
     <!-- Main Image -->
     <section class="relative">
-        <img src="img/main-img.jpg" alt="main image" class="w-full h-[26rem] object-cover">
-        <div class="absolute inset-0 flex items-center justify-center">
+        <img src="img/main-img.png" alt="main image" class="w-full h-[26rem] object-cover">
+        <!-- <div class="absolute inset-0 flex items-center justify-center">
             <h1 class="text-9xl text-center font-style: italic">Zyra<br>Jewelry</h1>
-        </div>
+        </div> -->
     </section>
 
     <!-- Advertisements -->
