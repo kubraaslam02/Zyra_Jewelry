@@ -65,7 +65,14 @@ $cartCount = count($cartItems);
                     </div>
                 </div>
                 <div class="text-center mt-4">
-                    <a href="cart.php" class="bg-black text-white px-4 py-2 text-sm rounded hover:bg-gray-600 transition">Add to Cart</a>
+                    <form method="POST" action="route.php" class="inline">
+                        <input type="hidden" name="action" value="add">
+                        <input type="hidden" name="product_id" value="1001">
+                        <input type="hidden" name="quantity" value="1">
+                        <button type="submit" class="bg-black text-white px-4 py-2 text-sm rounded hover:bg-gray-600 transition">
+                            Add to Cart
+                        </button>
+                    </form>
                 </div>
             </div>
 
@@ -85,10 +92,16 @@ $cartCount = count($cartItems);
                     </div>
                 </div>
                 <div class="text-center mt-4">
-                    <a href="cart.php" class="bg-black text-white px-4 py-2 text-sm rounded hover:bg-gray-600 transition">Add to Cart</a>
+                    <form method="POST" action="route.php" class="inline">
+                        <input type="hidden" name="action" value="add">
+                        <input type="hidden" name="product_id" value="1002">
+                        <input type="hidden" name="quantity" value="1">
+                        <button type="submit" class="bg-black text-white px-4 py-2 text-sm rounded hover:bg-gray-600 transition">
+                            Add to Cart
+                        </button>
+                    </form>
                 </div>
             </div>
-
         </div>
     </section>
 
