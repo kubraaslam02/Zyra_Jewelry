@@ -83,6 +83,10 @@ try {
 
         // Clear the cart
         clearCart();
+        $_SESSION['thank_you'] = "Thank you for your purchase! Your order will be delivered by " . date('F j, Y', strtotime('+14 days')) . ".";
+
+        header("Location: checkout.php");
+        exit();
     }
 
     else {

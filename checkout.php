@@ -9,6 +9,12 @@ require_once "functions.php";
 $cartItems = getCartItems(); 
 $cartCount = count($cartItems);
 $subtotal = calculateCartSubtotal();
+
+$thankYouMessage = '';
+if (isset($_SESSION['thank_you'])) {
+    $thankYouMessage = $_SESSION['thank_you'];
+    unset($_SESSION['thank_you']);
+}
 ?>
 
 <!DOCTYPE html>
@@ -18,6 +24,12 @@ $subtotal = calculateCartSubtotal();
     <title>Checkout</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
+<?php if (!empty($thankYouMessage)): ?>
+<script>
+    alert("<?= addslashes($thankYouMessage) ?>");
+    window.location.href = "index.php";
+</script>
+<?php endif; ?>
 <body class="font-serif text-black">
     <!-- Navbar -->
     <nav class="bg-white shadow flex items-center justify-between">
@@ -45,25 +57,9 @@ $subtotal = calculateCartSubtotal();
 
     <div class="max-w-7xl mx-auto px-6 py-10">
         <h1 class="text-3xl font-bold text-center mb-8">Checkout</h1>
-
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
             <!-- Checkout Form -->
             <div class="lg:col-span-2 space-y-6">
-                <!-- Order Summary -->
-                <div class="bg-gray-100 p-6 rounded-lg shadow">
-                    <h2 class="text-xl font-semibold mb-4">Order Summary</h2>
-                    <?php foreach ($cartItems as $item): ?>
-                        <div class="flex justify-between mb-2">
-                            <span><?= htmlspecialchars($item['name']) ?></span>
-                            <span>LKR <?= number_format($item['price'] * $item['quantity'], 2) ?></span>
-                        </div>
-                    <?php endforeach; ?>
-                    <hr class="my-4">
-                    <div class="flex justify-between font-bold text-lg">
-                        <span>Subtotal</span>
-                        <span>LKR <?= number_format($subtotal, 2) ?></span>
-                    </div>
-                </div>
                 <form action="route.php" method="POST" class="bg-gray-50 p-6 rounded-lg shadow space-y-4">
                     <h2 class="text-xl font-semibold mb-4">Billing Information</h2>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -102,11 +98,11 @@ $subtotal = calculateCartSubtotal();
                     <h2 class="text-xl font-semibold mt-6 mb-4">Payment Information</h2>
                     <div class="flex items-center space-x-4">
                         <label class="inline-flex items-center">
-                            <input type="radio" name="payment_method" value="card" class="form-radio" checked>
+                            <input type="radio" name="payment_method" value="card" checked>
                             <span class="ml-2">Credit / Debit Card</span>
                         </label>
                         <label class="inline-flex items-center">
-                            <input type="radio" name="payment_method" value="cod" class="form-radio">
+                            <input type="radio" name="payment_method" value="cod">
                             <span class="ml-2">Cash on Delivery</span>
                         </label>
                     </div>
@@ -151,6 +147,24 @@ $subtotal = calculateCartSubtotal();
                     </div>
                 </form>
             </div>
+
+            <!-- Order Summary -->
+            <div class="lg:col-span-1">
+                <div class="bg-gray-100 p-6 rounded-lg shadow">
+                    <h2 class="text-xl font-semibold mb-4">Order Summary</h2>
+                    <?php foreach ($cartItems as $item): ?>
+                        <div class="flex justify-between mb-2">
+                            <span><?= htmlspecialchars($item['name']) ?></span>
+                            <span>LKR <?= number_format($item['price'] * $item['quantity'], 2) ?></span>
+                        </div>
+                    <?php endforeach; ?>
+                    <hr class="my-4">
+                    <div class="flex justify-between font-bold text-lg">
+                        <span>Subtotal</span>
+                        <span>LKR <?= number_format($subtotal, 2) ?></span>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
         
@@ -185,5 +199,8 @@ $subtotal = calculateCartSubtotal();
             </form>
         </div>
     </footer>
+
+    
+    
 </body>
 </html>
