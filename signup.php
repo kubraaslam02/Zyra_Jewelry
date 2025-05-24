@@ -8,19 +8,20 @@ unset($_SESSION['error']);
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Signup</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body class="min-h-screen flex">
+<body class="min-h-screen flex flex-col md:flex-row">
   <!-- Left section (form) -->
-  <div class="w-1/2 flex flex-col justify-center items-center bg-white">
-    <!-- Logo -->
-    <img src="img/logo.png" alt="logo" class="w-48 h-48">
-    <div class="w-full max-w-sm font-serif">
+  <div class="w-full md:w-1/2 flex items-center justify-center bg-white min-h-screen md:min-h-0 relative z-10">
+    <div class="w-full max-w-sm font-serif px-6">
+      <!-- Logo -->
+      <img src="img/logo.png" alt="logo" class="w-32 h-32 mx-auto mb-4">
       <!-- Title -->
-      <h2 class="text-2xl font-bold mb-4">Sign up</h2>
-
+      <h2 class="text-2xl font-bold mb-2 text-center md:text-left">Sign up</h2>
+      <br>
       <!-- Error Message -->
       <?php if ($error): ?>
         <p class="text-red-500 mb-4"><?php echo htmlspecialchars($error); ?></p>
@@ -54,6 +55,6 @@ unset($_SESSION['error']);
   </div>
 
   <!-- Right section (advertisement) -->
-  <img src="img/signup-ad.jpg" alt="signup-advertisement" class="fixed top-0 right-0 w-1/2 h-screen object-cover">
+  <img src="img/signup-ad.jpg" alt="signup-advertisement" class="hidden md:block w-full h-screen object-cover md:w-1/2 md:h-auto md:fixed md:top-0 md:right-0">
 </body>
 </html>

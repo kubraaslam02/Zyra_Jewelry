@@ -19,48 +19,75 @@ $cartCount = count($cartItems);
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About Us</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="font-serif text-black">
     <!-- Navbar -->
-    <nav class="bg-white shadow flex items-center justify-between">
-        <div class="flex items-center space-x-4">
-            <!-- Logo -->
-            <a href="index.php">
-                <img src="img/logo.png" alt="logo" class="w-32 h-32">
+    <nav class="bg-white shadow px-4 py-2">
+        <!-- Top Row: Logo + Hamburger -->
+        <div class="flex items-center justify-between md:justify-start">
+            <!-- Logo (always left) -->
+            <a href="index.php" class="mr-auto">
+                <img src="img/logo.png" alt="logo" class="w-10 h-10 md:w-32 md:h-32">
             </a>
-            <a href="index.php" class="px-3 py-1 hover:bg-gray-200 <?php echo basename($_SERVER['PHP_SELF']) == 'index.php' ? 'font-bold text-black underline' : ''; ?>">Home</a>
-            <a href="about.php" class="px-3 py-1 hover:bg-gray-200 <?php echo basename($_SERVER['PHP_SELF']) == 'about.php' ? 'font-bold text-black underline' : ''; ?>">About Us</a>
-            <a href="products.php" class="px-3 py-1 hover:bg-gray-200 <?php echo basename($_SERVER['PHP_SELF']) == 'products.php' ? 'font-bold text-black underline' : ''; ?>">Products</a>
-            <a href="membership.php" class="px-3 py-1 hover:bg-gray-200 <?php echo basename($_SERVER['PHP_SELF']) == 'membership.php' ? 'font-bold text-black underline' : ''; ?>">Membership</a>
+
+            <!-- Hamburger for mobile -->
+            <button id= "menu-button"class="md:hidden">
+                <img src="img/menu.png" alt="menu" class="w-6 h-6">
+            </button>
+
+            <!-- Desktop Only -->
+            <div class="hidden md:flex md:flex-1 md:items-center md:justify-between w-full">
+                <!-- Centered Links -->
+                <div class="flex justify-center space-x-6 mx-auto">
+                    <a href="index.php" class="px-3 py-2 hover:bg-gray-200 <?php echo basename($_SERVER['PHP_SELF']) == 'index.php' ? 'font-bold text-black underline' : ''; ?>">Home</a>
+                    <a href="about.php" class="px-3 py-2 hover:bg-gray-200 <?php echo basename($_SERVER['PHP_SELF']) == 'about.php' ? 'font-bold text-black underline' : ''; ?>">About Us</a>
+                    <a href="products.php" class="px-3 py-2 hover:bg-gray-200 <?php echo basename($_SERVER['PHP_SELF']) == 'products.php' ? 'font-bold text-black underline' : ''; ?>">Products</a>
+                    <a href="membership.php" class="px-3 py-2 hover:bg-gray-200 <?php echo basename($_SERVER['PHP_SELF']) == 'membership.php' ? 'font-bold text-black underline' : ''; ?>">Membership</a>
+                </div>
+
+                <!-- Right Side Icons -->
+                <div class="flex items-center space-x-6">
+                    <a href="userprofile.php">
+                        <img src="img/user.png" alt="user" class="w-6 h-6 hover:opacity-75">
+                    </a>
+                    <a href="cart.php" class="relative">
+                        <img src="img/cart.png" class="w-6 h-6">
+                        <span class="absolute -top-2 -right-2 text-xs bg-red-600 text-white rounded-full px-1"><?= $cartCount ?></span>
+                    </a>
+                    <a href="logout.php" class="bg-black text-white px-3 py-1 text-sm rounded hover:bg-gray-800">Logout</a>
+                </div>
+            </div>
         </div>
-        <div class="flex items-center space-x-8 px-6">
-            <a href="userprofile.php">
-                <img src="img/user.png" alt="user" class="w-8 h-8 hover:opacity-75">
-            </a>
-            <a href="cart.php" class="relative">
-                <img src="img/cart.png" class="w-8 h-8">
-                <span class="absolute -top-2 -right-2 text-xs bg-red-600 text-white rounded-full px-1"><?= $cartCount ?></span>
-            </a>
-            <a href="logout.php" class="bg-black text-white px-8 py-2 rounded hover:bg-gray-800">Logout</a>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="md:hidden hidden flex-col space-y-2 mt-4">
+            <a href="index.php" class="block px-3 py-2 hover:bg-gray-200 <?php echo basename($_SERVER['PHP_SELF']) == 'index.php' ? 'font-bold text-black underline' : ''; ?>">Home</a>
+            <a href="about.php" class="block px-3 py-2 hover:bg-gray-200 <?php echo basename($_SERVER['PHP_SELF']) == 'about.php' ? 'font-bold text-black underline' : ''; ?>">About Us</a>
+            <a href="products.php" class="block px-3 py-2 hover:bg-gray-200 <?php echo basename($_SERVER['PHP_SELF']) == 'products.php' ? 'font-bold text-black underline' : ''; ?>">Products</a>
+            <a href="membership.php" class="block px-3 py-2 hover:bg-gray-200 <?php echo basename($_SERVER['PHP_SELF']) == 'membership.php' ? 'font-bold text-black underline' : ''; ?>">Membership</a>
+            <a href="userprofile.php" class="block px-3 py-2 hover:bg-gray-200">Profile</a>
+            <a href="cart.php" class="block px-3 py-2 hover:bg-gray-200">Cart (<?= $cartCount ?>)</a>
+            <a href="logout.php" class="block px-3 py-2 bg-black text-white rounded text-center hover:bg-gray-800">Logout</a>
         </div>
     </nav>
 
     <!-- Main Image -->
     <section class="relative">
-        <img src="img/ad-1.jpg" alt="main image" class="w-full h-[26rem] object-cover">
+        <img src="img/ad-1.jpg" alt="main image" class="w-full md:h-[26rem] object-cover">
         <div class="absolute inset-0 flex items-center justify-center">
-            <h1 class="text-black text-7xl font-bold">About Us</h1>
+            <h1 class="text-black text-3xl md:text-7xl font-bold">About Us</h1>
         </div>
     </section>
 
     <section class="flex items-center justify-center my-12 px-6">
-        <div class="flex w-full max-w-6xl">
-            <div class="w-1/3 flex items-center justify-center">
-                <img src="img/signup-ad.jpg" alt="About Us" class="w-full h-[30rem] object-cover rounded">
+        <div class="flex w-full md:max-w-6xl">
+            <div class="md:w-1/3 flex items-center justify-center">
+                <img src="img/signup-ad.jpg" alt="About Us" class="hidden md:block md:w-full md:h-[30rem] object-cover rounded">
             </div>
-            <div class="w-2/3 flex flex-col justify-center px-6">
+            <div class="md:w-2/3 flex flex-col justify-center px-6 text-center md:text-left">
                 <h2 class="text-2xl font-semibold mb-4">Our Story</h2>
                 <p class="mb-4">
                 Zyra Jewelry was born out of a love for minimalist design and meaningful accessories. What started as a small creative project quickly evolved into a full-fledged brand dedicated to crafting pieces that balance modern trends with timeless appeal.
@@ -102,7 +129,7 @@ $cartCount = count($cartItems);
     </section>
 
     <!-- Footer -->
-    <footer class="border-t-4 py-8 px-16 grid grid-cols-4 gap-4 text-sm">
+    <footer class="border-t-4 py-8 px-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 text-sm">
         <div>
             <h3 class="font-semibold mb-2">Contact Us</h3>
             <p>Address: 116/A, Nawala Road, Sri Lanka.</p>
@@ -132,5 +159,6 @@ $cartCount = count($cartItems);
             </form>
         </div>
     </footer>
+    <script src="main.js" defer></script>
 </body>
 </html>

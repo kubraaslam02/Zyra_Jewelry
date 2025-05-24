@@ -26,6 +26,7 @@ if (isset($_SESSION['thank_you'])) {
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Checkout</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
@@ -37,32 +38,76 @@ if (isset($_SESSION['thank_you'])) {
 <?php endif; ?>
 <body class="font-serif text-black">
     <!-- Navbar -->
-    <nav class="bg-white shadow flex items-center justify-between">
-        <div class="flex items-center space-x-4">
-            <!-- Logo -->
-            <a href="index.php">
-                <img src="img/logo.png" alt="logo" class="w-32 h-32">
+    <nav class="bg-white shadow px-4 py-2">
+        <!-- Top Row: Logo + Hamburger -->
+        <div class="flex items-center justify-between md:justify-start">
+            <!-- Logo (always left) -->
+            <a href="index.php" class="mr-auto">
+                <img src="img/logo.png" alt="logo" class="w-10 h-10 md:w-32 md:h-32">
             </a>
-            <a href="index.php" class="px-3 py-1 hover:bg-gray-200">Home</a>
-            <a href="about.php" class="px-3 py-1 hover:bg-gray-200">About Us</a>
-            <a href="products.php" class="px-3 py-1 hover:bg-gray-200">Products</a>
-            <a href="membership.php" class="px-3 py-1 hover:bg-gray-200">Membership</a>
+
+            <!-- Hamburger for mobile -->
+            <button id= "menu-button"class="md:hidden">
+                <img src="img/menu.png" alt="menu" class="w-6 h-6">
+            </button>
+
+            <!-- Desktop Only -->
+            <div class="hidden md:flex md:flex-1 md:items-center md:justify-between w-full">
+                <!-- Centered Links -->
+                <div class="flex justify-center space-x-6 mx-auto">
+                    <a href="index.php" class="px-3 py-2 hover:bg-gray-200">Home</a>
+                    <a href="about.php" class="px-3 py-2 hover:bg-gray-200">About Us</a>
+                    <a href="products.php" class="px-3 py-2 hover:bg-gray-200">Products</a>
+                    <a href="membership.php" class="px-3 py-2 hover:bg-gray-200">Membership</a>
+                </div>
+
+                <!-- Right Side Icons -->
+                <div class="flex items-center space-x-6">
+                    <a href="userprofile.php">
+                        <img src="img/user.png" alt="user" class="w-6 h-6 hover:opacity-75">
+                    </a>
+                    <a href="cart.php" class="relative">
+                        <img src="img/cart.png" class="w-6 h-6">
+                        <span class="absolute -top-2 -right-2 text-xs bg-red-600 text-white rounded-full px-1"><?= $cartCount ?></span>
+                    </a>
+                    <a href="logout.php" class="bg-black text-white px-3 py-1 text-sm rounded hover:bg-gray-800">Logout</a>
+                </div>
+            </div>
         </div>
-        <div class="flex items-center space-x-8 px-6">
-            <a href="userprofile.php">
-                <img src="img/user.png" alt="user" class="w-8 h-8 hover:opacity-75">
-            </a>
-            <a href="cart.php" class="relative">
-                <img src="img/cart.png" class="w-8 h-8">
-                <span class="absolute -top-2 -right-2 text-xs bg-red-600 text-white rounded-full px-1"><?= $cartCount ?></span>
-            </a>
-            <a href="logout.php" class="bg-black text-white px-8 py-2 rounded hover:bg-gray-800">Logout</a>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="md:hidden hidden flex-col space-y-2 mt-4">
+            <a href="index.php" class="block px-3 py-2 hover:bg-gray-200">Home</a>
+            <a href="about.php" class="block px-3 py-2 hover:bg-gray-200">About Us</a>
+            <a href="products.php" class="block px-3 py-2 hover:bg-gray-200">Products</a>
+            <a href="membership.php" class="block px-3 py-2 hover:bg-gray-200">Membership</a>
+            <a href="userprofile.php" class="block px-3 py-2 hover:bg-gray-200">Profile</a>
+            <a href="cart.php" class="block px-3 py-2 hover:bg-gray-200">Cart (<?= $cartCount ?>)</a>
+            <a href="logout.php" class="block px-3 py-2 bg-black text-white rounded text-center hover:bg-gray-800">Logout</a>
         </div>
     </nav>
 
     <div class="max-w-7xl mx-auto px-6 py-10">
         <h1 class="text-3xl font-bold text-center mb-8">Checkout</h1>
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Order Summary -->
+            <div class="lg:col-span-1">
+                <div class="bg-gray-100 p-6 rounded-lg shadow">
+                    <h2 class="text-xl font-semibold mb-4">Order Summary</h2>
+                    <?php foreach ($cartItems as $item): ?>
+                        <div class="flex justify-between mb-2">
+                            <span><?= htmlspecialchars($item['name']) ?></span>
+                            <span>LKR <?= number_format($item['price'] * $item['quantity'], 2) ?></span>
+                        </div>
+                    <?php endforeach; ?>
+                    <hr class="my-4">
+                    <div class="flex justify-between font-bold text-lg">
+                        <span>Subtotal</span>
+                        <span>LKR <?= number_format($subtotal, 2) ?></span>
+                    </div>
+                </div>
+            </div>
+            
             <!-- Checkout Form -->
             <div class="lg:col-span-2 space-y-6">
                 <form action="route.php" method="POST" class="bg-gray-50 p-6 rounded-lg shadow space-y-4">
@@ -100,14 +145,15 @@ if (isset($_SESSION['thank_you'])) {
                         </div>
                     </div>
 
+                    <!--Payment info-->
                     <h2 class="text-xl font-semibold mt-6 mb-4">Payment Information</h2>
                     <div class="flex items-center space-x-4">
                         <label class="inline-flex items-center">
-                            <input type="radio" name="payment_method" value="card" checked>
+                            <input type="radio" id="card" name="payment_method" value="card" checked>
                             <span class="ml-2">Credit / Debit Card</span>
                         </label>
                         <label class="inline-flex items-center">
-                            <input type="radio" name="payment_method" value="cod">
+                            <input type="radio" id="cod" name="payment_method" value="cod">
                             <span class="ml-2">Cash on Delivery</span>
                         </label>
                     </div>
@@ -152,29 +198,11 @@ if (isset($_SESSION['thank_you'])) {
                     </div>
                 </form>
             </div>
-
-            <!-- Order Summary -->
-            <div class="lg:col-span-1">
-                <div class="bg-gray-100 p-6 rounded-lg shadow">
-                    <h2 class="text-xl font-semibold mb-4">Order Summary</h2>
-                    <?php foreach ($cartItems as $item): ?>
-                        <div class="flex justify-between mb-2">
-                            <span><?= htmlspecialchars($item['name']) ?></span>
-                            <span>LKR <?= number_format($item['price'] * $item['quantity'], 2) ?></span>
-                        </div>
-                    <?php endforeach; ?>
-                    <hr class="my-4">
-                    <div class="flex justify-between font-bold text-lg">
-                        <span>Subtotal</span>
-                        <span>LKR <?= number_format($subtotal, 2) ?></span>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
         
     <!-- Footer -->
-    <footer class="border-t-4 py-8 px-16 grid grid-cols-4 gap-4 text-sm">
+    <footer class="border-t-4 py-8 px-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 text-sm">
         <div>
             <h3 class="font-semibold mb-2">Contact Us</h3>
             <p>Address: 116/A, Nawala Road, Sri Lanka.</p>
@@ -205,7 +233,7 @@ if (isset($_SESSION['thank_you'])) {
         </div>
     </footer>
 
-    
-    
+    <script src="main.js" defer></script>
+
 </body>
 </html>

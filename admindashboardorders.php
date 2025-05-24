@@ -39,23 +39,45 @@ try {
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>View All Orders</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="font-serif text-black">
     <!-- Navbar -->
-    <nav class="bg-white shadow flex items-center justify-between">
-        <div class="flex items-center space-x-4">
+    <nav class="bg-white shadow px-4 py-2">
+        <div class="flex items-center justify-between md:justify-start">
             <!-- Logo -->
-            <a href="admindashboardorders.php">
-                <img src="img/logo.png" alt="logo" class="w-32 h-32">
+            <a href="admindashboardorders.php" class="mr-auto">
+                <img src="img/logo.png" alt="logo" class="w-10 h-10 md:w-32 md:h-32">
             </a>
-            <a href="admindashboardorders.php" class="px-3 py-1 hover:bg-gray-200 <?php echo basename($_SERVER['PHP_SELF']) == 'admindashboardorders.php' ? 'font-bold text-black underline' : ''; ?>">View Orders</a>
-            <a href="admindashboardproducts.php" class="px-3 py-1 hover:bg-gray-200 <?php echo basename($_SERVER['PHP_SELF']) == 'admindashboardproducts.php' ? 'font-bold text-black underline' : ''; ?>">Manage Products</a>
-            <a href="admindashboardusers.php" class="px-3 py-1 hover:bg-gray-200 <?php echo basename($_SERVER['PHP_SELF']) == 'admindashboardusers.php' ? 'font-bold text-black underline' : ''; ?>">Manage Users</a>
+
+            <!-- Hamburger for mobile -->
+            <button id= "menu-button"class="md:hidden">
+                <img src="img/menu.png" alt="menu" class="w-6 h-6">
+            </button>
+
+            <!-- Desktop Only -->
+            <div class="hidden md:flex md:flex-1 md:items-center md:justify-between w-full">
+                <!-- Centered Links -->
+                <div class="flex justify-center space-x-6 mx-auto">
+                    <a href="admindashboardorders.php" class="px-3 py-2 hover:bg-gray-200 <?php echo basename($_SERVER['PHP_SELF']) == 'admindashboardorders.php' ? 'font-bold text-black underline' : ''; ?>">View Orders</a>
+                    <a href="admindashboardproducts.php" class="px-3 py-2 hover:bg-gray-200 <?php echo basename($_SERVER['PHP_SELF']) == 'admindashboardproducts.php' ? 'font-bold text-black underline' : ''; ?>">Manage Products</a>
+                    <a href="admindashboardusers.php" class="px-3 py-2 hover:bg-gray-200 <?php echo basename($_SERVER['PHP_SELF']) == 'admindashboardusers.php' ? 'font-bold text-black underline' : ''; ?>">Manage Users</a>
+                </div>
+
+                <div class="flex items-center space-x-8 px-6">
+                    <a href="logout.php" class="bg-black text-white px-8 py-2 rounded hover:bg-gray-800">Logout</a>
+                </div>
+            </div>
         </div>
-        <div class="flex items-center space-x-8 px-6">
-            <a href="logout.php" class="bg-black text-white px-8 py-2 rounded hover:bg-gray-800">Logout</a>
+        
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="md:hidden hidden flex-col space-y-2 mt-4">
+            <a href="admindashboardorders.php" class="block px-3 py-2 hover:bg-gray-200 <?php echo basename($_SERVER['PHP_SELF']) == 'admindashboardorders.php' ? 'font-bold text-black underline' : ''; ?>">View Orders</a>
+            <a href="admindashboardproducts.php" class="block px-3 py-2 hover:bg-gray-200 <?php echo basename($_SERVER['PHP_SELF']) == 'admindashboardproducts.php' ? 'font-bold text-black underline' : ''; ?>">Manage Products</a>
+            <a href="admindashboardusers.php" class="block px-3 py-2 hover:bg-gray-200 <?php echo basename($_SERVER['PHP_SELF']) == 'admindashboardusers.php' ? 'font-bold text-black underline' : ''; ?>">Manage Users</a>
+            <a href="logout.php" class="block px-3 py-2 bg-black text-white rounded text-center hover:bg-gray-800">Logout</a>
         </div>
     </nav>
 
@@ -98,7 +120,7 @@ try {
     </section>
 
     <!-- Footer -->
-    <footer class="border-t-4 py-8 px-16 grid grid-cols-4 gap-4 text-sm">
+    <footer class="border-t-4 py-8 px-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 text-sm">
         <div>
             <h3 class="font-semibold mb-2">Socials</h3>
             <div class="flex gap-4">
@@ -114,5 +136,8 @@ try {
             <a href="admindashboardusers.php" class="block underline">Manage Users</a>
         </div>
     </footer>
+
+    <script src="main.js" defer></script>
+    
 </body>
 </html>

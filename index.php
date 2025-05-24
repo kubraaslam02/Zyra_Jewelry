@@ -21,59 +21,83 @@ $cartCount = count($cartItems);
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home Page</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="font-serif text-black">
     <!-- Navbar -->
-    <nav class="bg-white shadow flex items-center justify-between">
-        <div class="flex items-center space-x-4">
-            <!-- Logo -->
-            <a href="index.php">
-                <img src="img/logo.png" alt="logo" class="w-32 h-32">
+    <nav class="bg-white shadow px-4 py-2">
+        <!-- Top Row: Logo + Hamburger -->
+        <div class="flex items-center justify-between md:justify-start">
+            <!-- Logo (always left) -->
+            <a href="index.php" class="mr-auto">
+                <img src="img/logo.png" alt="logo" class="w-10 h-10 md:w-32 md:h-32">
             </a>
-            <a href="index.php" class="px-3 py-1 hover:bg-gray-200 <?php echo basename($_SERVER['PHP_SELF']) == 'index.php' ? 'font-bold text-black underline' : ''; ?>">Home</a>
-            <a href="about.php" class="px-3 py-1 hover:bg-gray-200 <?php echo basename($_SERVER['PHP_SELF']) == 'about.php' ? 'font-bold text-black underline' : ''; ?>">About Us</a>
-            <a href="products.php" class="px-3 py-1 hover:bg-gray-200 <?php echo basename($_SERVER['PHP_SELF']) == 'products.php' ? 'font-bold text-black underline' : ''; ?>">Products</a>
-            <a href="membership.php" class="px-3 py-1 hover:bg-gray-200 <?php echo basename($_SERVER['PHP_SELF']) == 'membership.php' ? 'font-bold text-black underline' : ''; ?>">Membership</a>
+
+            <!-- Hamburger for mobile -->
+            <button id= "menu-button"class="md:hidden">
+                <img src="img/menu.png" alt="menu" class="w-6 h-6">
+            </button>
+
+            <!-- Desktop Only -->
+            <div class="hidden md:flex md:flex-1 md:items-center md:justify-between w-full">
+                <!-- Centered Links -->
+                <div class="flex justify-center space-x-6 mx-auto">
+                    <a href="index.php" class="px-3 py-2 hover:bg-gray-200 <?php echo basename($_SERVER['PHP_SELF']) == 'index.php' ? 'font-bold text-black underline' : ''; ?>">Home</a>
+                    <a href="about.php" class="px-3 py-2 hover:bg-gray-200 <?php echo basename($_SERVER['PHP_SELF']) == 'about.php' ? 'font-bold text-black underline' : ''; ?>">About Us</a>
+                    <a href="products.php" class="px-3 py-2 hover:bg-gray-200 <?php echo basename($_SERVER['PHP_SELF']) == 'products.php' ? 'font-bold text-black underline' : ''; ?>">Products</a>
+                    <a href="membership.php" class="px-3 py-2 hover:bg-gray-200 <?php echo basename($_SERVER['PHP_SELF']) == 'membership.php' ? 'font-bold text-black underline' : ''; ?>">Membership</a>
+                </div>
+
+                <!-- Right Side Icons -->
+                <div class="flex items-center space-x-6">
+                    <a href="userprofile.php">
+                        <img src="img/user.png" alt="user" class="w-6 h-6 hover:opacity-75">
+                    </a>
+                    <a href="cart.php" class="relative">
+                        <img src="img/cart.png" class="w-6 h-6">
+                        <span class="absolute -top-2 -right-2 text-xs bg-red-600 text-white rounded-full px-1"><?= $cartCount ?></span>
+                    </a>
+                    <a href="logout.php" class="bg-black text-white px-3 py-1 text-sm rounded hover:bg-gray-800">Logout</a>
+                </div>
+            </div>
         </div>
-        <div class="flex items-center space-x-8 px-6">
-            <a href="userprofile.php">
-                <img src="img/user.png" alt="user" class="w-8 h-8 hover:opacity-75">
-            </a>
-            <a href="cart.php" class="relative">
-                <img src="img/cart.png" class="w-8 h-8">
-                <span class="absolute -top-2 -right-2 text-xs bg-red-600 text-white rounded-full px-1"><?= $cartCount ?></span>
-            </a>
-            <a href="logout.php" class="bg-black text-white px-8 py-2 rounded hover:bg-gray-800">Logout</a>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="md:hidden hidden flex-col space-y-2 mt-4">
+            <a href="index.php" class="block px-3 py-2 hover:bg-gray-200 <?php echo basename($_SERVER['PHP_SELF']) == 'index.php' ? 'font-bold text-black underline' : ''; ?>">Home</a>
+            <a href="about.php" class="block px-3 py-2 hover:bg-gray-200 <?php echo basename($_SERVER['PHP_SELF']) == 'about.php' ? 'font-bold text-black underline' : ''; ?>">About Us</a>
+            <a href="products.php" class="block px-3 py-2 hover:bg-gray-200 <?php echo basename($_SERVER['PHP_SELF']) == 'products.php' ? 'font-bold text-black underline' : ''; ?>">Products</a>
+            <a href="membership.php" class="block px-3 py-2 hover:bg-gray-200 <?php echo basename($_SERVER['PHP_SELF']) == 'membership.php' ? 'font-bold text-black underline' : ''; ?>">Membership</a>
+            <a href="userprofile.php" class="block px-3 py-2 hover:bg-gray-200">Profile</a>
+            <a href="cart.php" class="block px-3 py-2 hover:bg-gray-200">Cart (<?= $cartCount ?>)</a>
+            <a href="logout.php" class="block px-3 py-2 bg-black text-white rounded text-center hover:bg-gray-800">Logout</a>
         </div>
     </nav>
 
     <!-- Main Image -->
     <section class="relative">
-        <img src="img/main-img.png" alt="main image" class="w-full h-[26rem] object-cover">
-        <!-- <div class="absolute inset-0 flex items-center justify-center">
-            <h1 class="text-9xl text-center font-style: italic">Zyra<br>Jewelry</h1>
-        </div> -->
+        <img src="img/main-img.png" alt="main image" class="w-full object-cover md:h-[26rem]">
     </section>
 
     <!-- Advertisements -->
     <section class="flex justify-center gap-4 my-8 px-4">
-        <div class="relative w-80 h-32">
+        <div class="relative w-full h-24 md:w-80 md:h-32">
             <img src="img/ad-1.jpg" alt="advertisement1" class="w-full h-full object-cover rounded">
-            <div class="absolute top-2 left-2 text-lg font-semibold px-4 py-4">
+            <div class="absolute top-2 left-2 font-semibold text-sm p-2 md:text-lg md:p-4">
                 Charm Rings
             </div>
         </div>
-        <div class="relative w-80 h-32">
+        <div class="relative w-full h-24 md:w-80 md:h-32">
             <img src="img/ad-2.png" alt="advertisement1" class="w-full h-full object-cover rounded">
-            <div class="absolute top-2 left-2 text-lg font-semibold px-4 py-4">
+            <div class="absolute top-2 left-2 font-semibold text-sm p-2 md:text-lg md:p-4">
                 Elegant Bracelets
             </div>
         </div>
-        <div class="relative w-80 h-32">
+        <div class="relative w-full h-24 md:w-80 md:h-32">
             <img src="img/products/butterfly-pearl-earring.jpeg" alt="advertisement1" class="w-full h-full object-cover rounded">
-            <div class="absolute top-2 left-2 text-lg font-semibold px-4 py-4">
+            <div class="absolute top-2 left-2 font-semibold text-sm p-2 md:text-lg md:p-4">
                 Modern Earrings
             </div>
         </div>
@@ -84,32 +108,34 @@ $cartCount = count($cartItems);
         <h2 class="text-xl font-semibold mb-4">Popular Categories</h2>
         <div class="flex justify-center gap-6 flex-wrap">
             <a href="products.php" class="flex flex-col items-center">
-                <img src="img/products/flower-ring.png" alt="Rings" class="w-24 h-24 object-cover rounded-full mb-2 hover:opacity-80 transition">
+                <img src="img/products/flower-ring.png" alt="Rings" class="w-16 h-16 md:w-24 md:h-24 object-cover rounded-full mb-2 hover:opacity-80 transition">
                 <span class="text-sm font-medium">Rings</span>
             </a>
 
             <a href="products.php" class="flex flex-col items-center">
-                <img src="img/products/gem-earring.png" alt="Earrings" class="w-24 h-24 object-cover rounded-full mb-2 hover:opacity-80 transition">
+                <img src="img/products/gem-earring.png" alt="Earrings" class="w-16 h-16 md:w-24 md:h-24 object-cover rounded-full mb-2 hover:opacity-80 transition">
                 <span class="text-sm font-medium">Earrings</span>
             </a>
 
             <a href="products.php" class="flex flex-col items-center">
-                <img src="img/products/pearl-flower-bracelet.png" alt="Bracelets" class="w-24 h-24 object-cover rounded-full mb-2 hover:opacity-80 transition">
+                <img src="img/products/pearl-flower-bracelet.png" alt="Bracelets" class="w-16 h-16 md:w-24 md:h-24 object-cover rounded-full mb-2 hover:opacity-80 transition">
                 <span class="text-sm font-medium">Bracelets</span>
             </a>
 
             <a href="products.php" class="flex flex-col items-center">
-                <img src="img/products/diamond-necklace.png" alt="Necklaces" class="w-24 h-24 object-cover rounded-full mb-2 hover:opacity-80 transition">
+                <img src="img/products/diamond-necklace.png" alt="Necklaces" class="w-16 h-16 md:w-24 md:h-24 object-cover rounded-full mb-2 hover:opacity-80 transition">
                 <span class="text-sm font-medium">Necklaces</span>
             </a>
         </div>
     </section>
 
     <!-- Trendy Collection -->
-    <section class="my-8 px-8">
-        <div class="flex justify-between items-center mb-4">
+    <section class="text-center my-8 px-8">
+        <div class="mb-4 flex flex-col sm:flex-row sm:justify-between sm:items-center">
             <h2 class="text-xl font-semibold">Trendy Collection</h2>
-            <a href="products.php" class="text-sm bg-black text-white px-3 py-2 rounded hover:bg-gray-800">View More >></a>
+            <a href="products.php" class="text-xs md:text-sm bg-black text-white px-3 py-2 rounded hover:bg-gray-800 self-end mt-2">
+            View More >>
+            </a>
         </div>
         <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
             <?php
@@ -120,7 +146,7 @@ $cartCount = count($cartItems);
 
             foreach ($randomProducts as $product): ?>
                 <div class="border rounded-lg p-3 shadow hover:shadow-lg transition">
-                    <img src="<?= htmlspecialchars($product['image_url']) ?>" alt="<?= htmlspecialchars($product['name']) ?>" class="w-full h-48 object-cover rounded">
+                    <img src="<?= htmlspecialchars($product['image_url']) ?>" alt="<?= htmlspecialchars($product['name']) ?>" class="w-full h-24 md:h-48 object-cover rounded">
                     <p class="mt-2 font-medium"><?= htmlspecialchars($product['name']) ?></p>
                     <p class="text-sm text-gray-600">LKR <?= number_format($product['price'], 2) ?></p>
                     <form method="POST" action="route.php" class="add-to-cart-form">
@@ -137,19 +163,19 @@ $cartCount = count($cartItems);
     <!-- About Zyra -->
     <section class="flex items-center justify-center my-12 px-6">
         <div class="flex w-full max-w-6xl">
-            <div class="w-1/2 flex items-center justify-center">
-                <img src="img/login-ad.jpg" alt="About Us" class="w-full h-[26rem] object-cover">
+            <div class="flex items-center justify-center md:w-1/2 ">
+                <img src="img/login-ad.jpg" alt="About Us" class="hidden md:block md:w-full md:h-[26rem] object-cover">
             </div>
-            <div class="w-1/2 flex flex-col justify-center px-6">
+            <div class="flex flex-col justify-center px-6 text-center md:w-1/2 md:text-left">
                 <h2 class="text-2xl font-semibold mb-4">About Zyra</h2>
                 <p class="mb-4">Discover jewelry that tells your story. At Zyra, we craft pieces that blend elegance, meaning, and modern design — perfect for every style and every moment. Whether you're searching for a timeless gift or a bold new look, Zyra is where your shine begins.</p>
-                <a href="about.php" class="bg-black text-white px-8 py-2 rounded hover:bg-gray-800 self-start">Learn More</a>
+                <a href="about.php" class="bg-black text-white px-8 py-2 rounded hover:bg-gray-800 self-center md:self-start">Learn More</a>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="border-t-4 py-8 px-16 grid grid-cols-4 gap-4 text-sm">
+    <footer class="border-t-4 py-8 px-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 text-sm">
         <div>
             <h3 class="font-semibold mb-2">Contact Us</h3>
             <p>Address: 116/A, Nawala Road, Sri Lanka.</p>
@@ -180,7 +206,7 @@ $cartCount = count($cartItems);
         </div>
     </footer>
 
-    <script src="script.js"></script>
+    <script src="main.js" defer></script>
 
 </body>
 </html>
