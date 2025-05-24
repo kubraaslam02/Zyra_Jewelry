@@ -95,6 +95,85 @@ try {
         exit();
     }
 
+    elseif (isset($_POST['add_product']) || isset($_POST['update_product']) || isset($_POST['delete_product'])) {
+        $pdo = connectDB();
+    
+        // ADD PRODUCT
+        if (isset($_POST['add_product'])) {
+            $name = $_POST['name'];
+            $price = $_POST['price'];
+            $category = $_POST['category'];
+            $imagePath = uploadProductImage();
+    
+            $stmt = $pdo->prepare("INSERT INTO products (name, price, category, image_url) VALUES (?, ?, ?, ?)");
+            $stmt->execute([$name , $price, $category, $imagePath]);
+        }
+    
+        // UPDATE PRODUCT
+        elseif (isset($_POST['update_product'])) {
+            $id = $_POST['id'];
+            $name = $_POST['name'];
+            $price = $_POST['price'];
+            $category = $_POST['category'];
+            $imagePath = uploadProductImage();
+    
+            if ($imagePath) {
+                $stmt = $pdo->prepare("UPDATE products SET name = ?, price = ?, category = ?, image_url = ? WHERE id = ?");
+                $stmt->execute([$name, $price, $category, $imagePath, $id]);
+            } else {
+                $stmt = $pdo->prepare("UPDATE products SET name = ?, price = ?, category = ? WHERE id = ?");
+                $stmt->execute([$name, $price, $category, $id]);
+            }
+        }
+    
+        // DELETE PRODUCT
+        elseif (isset($_POST['delete_product'])) {
+            $id = $_POST['delete_id'];
+            $stmt = $pdo->prepare("DELETE FROM products WHERE id = ?");
+            $stmt->execute([$id]);
+        }
+    
+        header("Location: admindashboardproducts.php");
+        exit();
+    }
+    
+    elseif (isset($_POST['add_user']) || isset($_POST['update_user']) || isset($_POST['delete_user'])) {
+        $pdo = connectDB();
+    
+        // ADD User
+        if (isset($_POST['add_user'])) {
+            $username = $_POST['username'];
+            $email = $_POST['email'];
+            $password = $_POST['password'];
+            $membership = $_POST['membership'];
+    
+            $stmt = $pdo->prepare("INSERT INTO users (username, email, password, membership) VALUES (?, ?, ?, ?)");
+            $stmt->execute([$username , $email, $password, $membership]);
+        }
+    
+        // UPDATE User
+        elseif (isset($_POST['update_user'])) {
+            $id = $_POST['id'];
+            $username = $_POST['username'];
+            $email = $_POST['email'];
+            $password = $_POST['password'];
+            $membership = $_POST['membership'];
+
+            $stmt = $pdo->prepare("UPDATE users SET username = ?, email = ?, password = ?, membership = ? WHERE id = ?");
+            $stmt->execute([$username, $email, $password, $membership, $id]);
+        }
+    
+        // DELETE User
+        elseif (isset($_POST['delete_user'])) {
+            $id = $_POST['delete_id'];
+            $stmt = $pdo->prepare("DELETE FROM users WHERE id = ?");
+            $stmt->execute([$id]);
+        }
+    
+        header("Location: admindashboardusers.php");
+        exit();
+    }
+
     else {
         header("Location: login.php");
         exit();

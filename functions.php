@@ -38,9 +38,15 @@ function registerUser($username, $email, $password) {
     return true;
 }
 
+function getAllUsers() {
+    $pdo = connectDB();
+    $stmt = $pdo->query("SELECT * FROM users WHERE usertype != 'admin'");
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
 function getAllProducts() {
     $pdo = connectDB();
-    $stmt = $pdo->query("SELECT * FROM products");
+    $stmt = $pdo->query("SELECT * FROM products WHERE category != 'membership'");
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
@@ -178,4 +184,17 @@ function getUserOrders() {
     }
 
     return $orders;
+}
+
+function uploadProductImage() {
+    if (!empty($_FILES['image']['name'])) {
+        $targetDir = "img/products/";
+        $filename = basename($_FILES["image"]["name"]);
+        $targetFile = $targetDir . time() . "_" . $filename;
+
+        if (move_uploaded_file($_FILES["image"]["tmp_name"], $targetFile)) {
+            return $targetFile;
+        }
+    }
+    return ''; // Return empty string if no image uploaded
 }
