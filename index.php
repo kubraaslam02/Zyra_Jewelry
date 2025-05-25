@@ -1,10 +1,13 @@
 <?php
 session_start();
+
+// Redirect to login page if user is not logged in
 if (!isset($_SESSION['user'])) {
     header("Location: login.php");
     exit();
 }
 
+// Redirect admin users to the admin dashboard
 if ($_SESSION['user']['usertype'] === 'admin') {
     header("Location: admindashboardorders.php");
     exit();
@@ -12,6 +15,7 @@ if ($_SESSION['user']['usertype'] === 'admin') {
 
 require_once "functions.php";
 
+// Get all products and cart items for current user
 $allProducts = getAllProducts();
 $cartItems = getCartItems(); 
 $cartCount = count($cartItems);
@@ -26,31 +30,31 @@ $cartCount = count($cartItems);
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="font-serif text-black">
+
     <!-- Navbar -->
     <nav class="bg-white shadow px-4 py-2">
-        <!-- Top Row: Logo + Hamburger -->
         <div class="flex items-center justify-between md:justify-start">
-            <!-- Logo (always left) -->
+            <!-- Logo -->
             <a href="index.php" class="mr-auto">
                 <img src="img/logo.png" alt="logo" class="w-10 h-10 md:w-32 md:h-32">
             </a>
 
-            <!-- Hamburger for mobile -->
-            <button id= "menu-button"class="md:hidden">
+            <!-- Mobile hamburger menu -->
+            <button id="menu-button" class="md:hidden">
                 <img src="img/menu.png" alt="menu" class="w-6 h-6">
             </button>
 
-            <!-- Desktop Only -->
+            <!-- Desktop navigation links -->
             <div class="hidden md:flex md:flex-1 md:items-center md:justify-between w-full">
-                <!-- Centered Links -->
                 <div class="flex justify-center space-x-6 mx-auto">
+                    <!-- Highlight active page-->
                     <a href="index.php" class="px-3 py-2 hover:bg-gray-200 <?php echo basename($_SERVER['PHP_SELF']) == 'index.php' ? 'font-bold text-black underline' : ''; ?>">Home</a>
                     <a href="about.php" class="px-3 py-2 hover:bg-gray-200 <?php echo basename($_SERVER['PHP_SELF']) == 'about.php' ? 'font-bold text-black underline' : ''; ?>">About Us</a>
                     <a href="products.php" class="px-3 py-2 hover:bg-gray-200 <?php echo basename($_SERVER['PHP_SELF']) == 'products.php' ? 'font-bold text-black underline' : ''; ?>">Products</a>
                     <a href="membership.php" class="px-3 py-2 hover:bg-gray-200 <?php echo basename($_SERVER['PHP_SELF']) == 'membership.php' ? 'font-bold text-black underline' : ''; ?>">Membership</a>
                 </div>
 
-                <!-- Right Side Icons -->
+                <!-- Icons -->
                 <div class="flex items-center space-x-6">
                     <a href="userprofile.php">
                         <img src="img/user.png" alt="user" class="w-6 h-6 hover:opacity-75">
@@ -66,10 +70,10 @@ $cartCount = count($cartItems);
 
         <!-- Mobile Menu -->
         <div id="mobile-menu" class="md:hidden hidden flex-col space-y-2 mt-4">
-            <a href="index.php" class="block px-3 py-2 hover:bg-gray-200 <?php echo basename($_SERVER['PHP_SELF']) == 'index.php' ? 'font-bold text-black underline' : ''; ?>">Home</a>
-            <a href="about.php" class="block px-3 py-2 hover:bg-gray-200 <?php echo basename($_SERVER['PHP_SELF']) == 'about.php' ? 'font-bold text-black underline' : ''; ?>">About Us</a>
-            <a href="products.php" class="block px-3 py-2 hover:bg-gray-200 <?php echo basename($_SERVER['PHP_SELF']) == 'products.php' ? 'font-bold text-black underline' : ''; ?>">Products</a>
-            <a href="membership.php" class="block px-3 py-2 hover:bg-gray-200 <?php echo basename($_SERVER['PHP_SELF']) == 'membership.php' ? 'font-bold text-black underline' : ''; ?>">Membership</a>
+            <a href="index.php" class="block px-3 py-2 hover:bg-gray-200 <?= activeLink('index.php') ?>">Home</a>
+            <a href="about.php" class="block px-3 py-2 hover:bg-gray-200 <?= activeLink('about.php') ?>">About Us</a>
+            <a href="products.php" class="block px-3 py-2 hover:bg-gray-200 <?= activeLink('products.php') ?>">Products</a>
+            <a href="membership.php" class="block px-3 py-2 hover:bg-gray-200 <?= activeLink('membership.php') ?>">Membership</a>
             <a href="userprofile.php" class="block px-3 py-2 hover:bg-gray-200">Profile</a>
             <a href="cart.php" class="block px-3 py-2 hover:bg-gray-200">Cart (<?= $cartCount ?>)</a>
             <a href="logout.php" class="block px-3 py-2 bg-black text-white rounded text-center hover:bg-gray-800">Logout</a>
@@ -133,9 +137,7 @@ $cartCount = count($cartItems);
     <section class="text-center my-8 px-8">
         <div class="mb-4 flex flex-col sm:flex-row sm:justify-between sm:items-center">
             <h2 class="text-xl font-semibold">Trendy Collection</h2>
-            <a href="products.php" class="text-xs md:text-sm bg-black text-white px-3 py-2 rounded hover:bg-gray-800 self-end mt-2">
-            View More >>
-            </a>
+            <a href="products.php" class="text-xs md:text-sm bg-black text-white px-3 py-2 rounded hover:bg-gray-800 self-end mt-2">View More >></a>
         </div>
         <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
             <?php
@@ -144,14 +146,15 @@ $cartCount = count($cartItems);
             shuffle($randomProducts);
             $randomProducts = array_slice($randomProducts, 0, 5);
 
+            // Display 5 random products
             foreach ($randomProducts as $product): ?>
                 <div class="border rounded-lg p-3 shadow hover:shadow-lg transition">
-                    <img src="<?= htmlspecialchars($product['image_url']) ?>" alt="<?= htmlspecialchars($product['name']) ?>" class="w-full h-24 md:h-48 object-cover rounded">
-                    <p class="mt-2 font-medium"><?= htmlspecialchars($product['name']) ?></p>
-                    <p class="text-sm text-gray-600">LKR <?= number_format($product['price'], 2) ?></p>
+                    <img src="<?php echo htmlspecialchars($product['image_url']) ?>" alt="<?php echo htmlspecialchars($product['name']) ?>" class="w-full h-24 md:h-48 object-cover rounded">
+                    <p class="mt-2 font-medium"><?php echo htmlspecialchars($product['name']) ?></p>
+                    <p class="text-sm text-gray-600">LKR <?php echo number_format($product['price'], 2) ?></p>
                     <form method="POST" action="route.php" class="add-to-cart-form">
                         <input type="hidden" name="action" value="add">
-                        <input type="hidden" name="product_id" value="<?= $product['id'] ?>">
+                        <input type="hidden" name="product_id" value="<?php echo $product['id'] ?>">
                         <button type="submit" class="mt-2 bg-black text-white px-4 py-1 text-sm rounded hover:bg-gray-600">Add to Cart</button>
                     </form>
                 </div>
@@ -159,8 +162,7 @@ $cartCount = count($cartItems);
         </div>
     </section>
 
-
-    <!-- About Zyra -->
+    <!-- About Section -->
     <section class="flex items-center justify-center my-12 px-6">
         <div class="flex w-full max-w-6xl">
             <div class="flex items-center justify-center md:w-1/2 ">
@@ -168,7 +170,7 @@ $cartCount = count($cartItems);
             </div>
             <div class="flex flex-col justify-center px-6 text-center md:w-1/2 md:text-left">
                 <h2 class="text-2xl font-semibold mb-4">About Zyra</h2>
-                <p class="mb-4">Discover jewelry that tells your story. At Zyra, we craft pieces that blend elegance, meaning, and modern design — perfect for every style and every moment. Whether you're searching for a timeless gift or a bold new look, Zyra is where your shine begins.</p>
+                <p class="mb-4">Discover jewelry that tells your story. At Zyra, we craft pieces that blend elegance, meaning, and modern design — perfect for every style and every moment.</p>
                 <a href="about.php" class="bg-black text-white px-8 py-2 rounded hover:bg-gray-800 self-center md:self-start">Learn More</a>
             </div>
         </div>
@@ -205,8 +207,6 @@ $cartCount = count($cartItems);
             </form>
         </div>
     </footer>
-
     <script src="main.js" defer></script>
-
 </body>
 </html>
