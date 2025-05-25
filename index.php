@@ -39,12 +39,12 @@ $cartCount = count($cartItems);
                 <img src="img/logo.png" alt="logo" class="w-10 h-10 md:w-32 md:h-32">
             </a>
 
-            <!-- Mobile hamburger menu -->
-            <button id="menu-button" class="md:hidden">
+            <!-- Hamburger menu for mobile -->
+            <button id= "menu-button"class="md:hidden">
                 <img src="img/menu.png" alt="menu" class="w-6 h-6">
             </button>
 
-            <!-- Desktop navigation links -->
+            <!-- Desktop menu -->
             <div class="hidden md:flex md:flex-1 md:items-center md:justify-between w-full">
                 <div class="flex justify-center space-x-6 mx-auto">
                     <!-- Highlight active page-->
@@ -61,7 +61,7 @@ $cartCount = count($cartItems);
                     </a>
                     <a href="cart.php" class="relative">
                         <img src="img/cart.png" class="w-6 h-6">
-                        <span class="absolute -top-2 -right-2 text-xs bg-red-600 text-white rounded-full px-1"><?= $cartCount ?></span>
+                        <span class="absolute -top-2 -right-2 text-xs bg-red-600 text-white rounded-full px-1"><?php echo $cartCount ?></span>
                     </a>
                     <a href="logout.php" class="bg-black text-white px-3 py-1 text-sm rounded hover:bg-gray-800">Logout</a>
                 </div>
@@ -70,12 +70,12 @@ $cartCount = count($cartItems);
 
         <!-- Mobile Menu -->
         <div id="mobile-menu" class="md:hidden hidden flex-col space-y-2 mt-4">
-            <a href="index.php" class="block px-3 py-2 hover:bg-gray-200 <?= activeLink('index.php') ?>">Home</a>
-            <a href="about.php" class="block px-3 py-2 hover:bg-gray-200 <?= activeLink('about.php') ?>">About Us</a>
-            <a href="products.php" class="block px-3 py-2 hover:bg-gray-200 <?= activeLink('products.php') ?>">Products</a>
-            <a href="membership.php" class="block px-3 py-2 hover:bg-gray-200 <?= activeLink('membership.php') ?>">Membership</a>
+            <a href="index.php" class="block px-3 py-2 hover:bg-gray-200 <?php echo basename($_SERVER['PHP_SELF']) == 'index.php' ? 'font-bold text-black underline' : ''; ?>">Home</a>
+            <a href="about.php" class="block px-3 py-2 hover:bg-gray-200 <?php echo basename($_SERVER['PHP_SELF']) == 'about.php' ? 'font-bold text-black underline' : ''; ?>">About Us</a>
+            <a href="products.php" class="block px-3 py-2 hover:bg-gray-200 <?php echo basename($_SERVER['PHP_SELF']) == 'products.php' ? 'font-bold text-black underline' : ''; ?>">Products</a>
+            <a href="membership.php" class="block px-3 py-2 hover:bg-gray-200 <?php echo basename($_SERVER['PHP_SELF']) == 'membership.php' ? 'font-bold text-black underline' : ''; ?>">Membership</a>
             <a href="userprofile.php" class="block px-3 py-2 hover:bg-gray-200">Profile</a>
-            <a href="cart.php" class="block px-3 py-2 hover:bg-gray-200">Cart (<?= $cartCount ?>)</a>
+            <a href="cart.php" class="block px-3 py-2 hover:bg-gray-200">Cart (<?php echo $cartCount ?>)</a>
             <a href="logout.php" class="block px-3 py-2 bg-black text-white rounded text-center hover:bg-gray-800">Logout</a>
         </div>
     </nav>
@@ -170,7 +170,7 @@ $cartCount = count($cartItems);
             </div>
             <div class="flex flex-col justify-center px-6 text-center md:w-1/2 md:text-left">
                 <h2 class="text-2xl font-semibold mb-4">About Zyra</h2>
-                <p class="mb-4">Discover jewelry that tells your story. At Zyra, we craft pieces that blend elegance, meaning, and modern design — perfect for every style and every moment.</p>
+                <p class="mb-4">Discover jewelry that tells your story. At Zyra, we craft pieces that blend elegance, meaning, and modern design — perfect for every style and every moment. Whether you're searching for a timeless gift or a bold new look, Zyra is where your shine begins.</p>
                 <a href="about.php" class="bg-black text-white px-8 py-2 rounded hover:bg-gray-800 self-center md:self-start">Learn More</a>
             </div>
         </div>
@@ -203,7 +203,7 @@ $cartCount = count($cartItems);
             <h3 class="font-semibold mb-2">Join the Mailing List</h3>
             <form>
                 <input type="email" placeholder="Enter your email" class="w-full border px-2 py-1 mb-2">
-                <button type="submit" class="bg-black text-white px-4 py-1 text-sm rounded hover:bg-gray-600">Subscribe</button>
+                <button type="button" class="bg-black text-white px-4 py-1 text-sm rounded hover:bg-gray-600">Subscribe</button>
             </form>
         </div>
     </footer>

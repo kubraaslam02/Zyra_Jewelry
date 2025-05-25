@@ -119,7 +119,7 @@ $email = htmlspecialchars($_SESSION['user']['email']);
             <h3 class="font-semibold mb-2">Join the Mailing List</h3>
             <form>
                 <input type="email" placeholder="Enter your email" class="w-full border px-2 py-1 mb-2">
-                <button type="submit" class="bg-black text-white px-4 py-1 text-sm rounded hover:bg-gray-600">Subscribe</button>
+                <button type="button" class="bg-black text-white px-4 py-1 text-sm rounded hover:bg-gray-600">Subscribe</button>
             </form>
         </div>
     </footer>
