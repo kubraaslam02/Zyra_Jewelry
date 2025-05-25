@@ -13,6 +13,11 @@ if ($_SESSION['user']['usertype'] === 'user') {
     exit();
 }
 
+if (isset($_SESSION['product_error'])) {
+    echo '<div class="error-message" style="color:red; font-weight:bold;">' . htmlspecialchars($_SESSION['product_error']) . '</div>';
+    unset($_SESSION['product_error']);
+}
+
 require_once "functions.php";
 
 // Fetch all products from the database
@@ -141,10 +146,10 @@ unset($_SESSION['error'], $_SESSION['success']);
                         <label for="category">Category:</label>
                         <select name="category" required class="w-full border border-gray-300 p-2 rounded">
                             <option value=""></option>
-                            <option>Ring</option>
-                            <option>Earring</option>
-                            <option>Necklace</option>
-                            <option>Bracelet</option>
+                            <option>rings</option>
+                            <option>earrings</option>
+                            <option>necklaces</option>
+                            <option>bracelets</option>
                         </select>
 
                         <label for="file">Insert File:</label>
@@ -162,19 +167,22 @@ unset($_SESSION['error'], $_SESSION['success']);
                 <section class="bg-white p-6 border border-black rounded shadow">
                     <h2 class="text-xl font-semibold mb-4">Update Product</h2>
                     <form action="route.php" method="POST" enctype="multipart/form-data" class="space-y-4">
+                        <label for="product_id">Product ID:</label>
+                        <input type="number" name="id" required class="w-full border border-gray-300 p-2 rounded" />
+
                         <label for="product_name">Product Name:</label>
-                        <input type="text" name="name" required class="w-full border border-gray-300 p-2 rounded" />
+                        <input type="text" name="name" class="w-full border border-gray-300 p-2 rounded" />
 
                         <label for="unit_price">Unit Price (LKR):</label>
-                        <input type="number" step="0.01" name="price" required class="w-full border border-gray-300 p-2 rounded" />
+                        <input type="number" step="0.01" name="price" class="w-full border border-gray-300 p-2 rounded" />
 
                         <label for="category">Category:</label>
-                        <select name="category" required class="w-full border border-gray-300 p-2 rounded">
+                        <select name="category" class="w-full border border-gray-300 p-2 rounded">
                             <option value=""></option>
-                            <option>Ring</option>
-                            <option>Earring</option>
-                            <option>Necklace</option>
-                            <option>Bracelet</option>
+                            <option>rings</option>
+                            <option>earrings</option>
+                            <option>necklaces</option>
+                            <option>bracelets</option>
                         </select>
 
                         <label for="file">Insert File:</label>

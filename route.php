@@ -105,39 +105,64 @@ try {
     elseif (isset($_POST['add_product']) || isset($_POST['update_product']) || isset($_POST['delete_product'])) {
         $pdo = connectDB();
 
-        // ADD PRODUCT
-        if (isset($_POST['add_product'])) {
-            $name = $_POST['name'];
-            $price = $_POST['price'];
-            $category = $_POST['category'];
-            $imagePath = uploadProductImage();
-
-            $stmt = $pdo->prepare("INSERT INTO products (name, price, category, image_url) VALUES (?, ?, ?, ?)");
-            $stmt->execute([$name , $price, $category, $imagePath]);
-        }
-
-        // UPDATE PRODUCT
-        elseif (isset($_POST['update_product'])) {
-            $id = $_POST['id'];
-            $name = $_POST['name'];
-            $price = $_POST['price'];
-            $category = $_POST['category'];
-            $imagePath = uploadProductImage();
-
-            if ($imagePath) {
-                $stmt = $pdo->prepare("UPDATE products SET name = ?, price = ?, category = ?, image_url = ? WHERE id = ?");
-                $stmt->execute([$name, $price, $category, $imagePath, $id]);
-            } else {
-                $stmt = $pdo->prepare("UPDATE products SET name = ?, price = ?, category = ? WHERE id = ?");
-                $stmt->execute([$name, $price, $category, $id]);
+        try {
+            // ADD PRODUCT
+            if (isset($_POST['add_product'])) {
+                $name = $_POST['name'];
+                $price = $_POST['price'];
+                $category = $_POST['category'];
+                $imagePath = uploadProductImage();
+    
+                $stmt = $pdo->prepare("INSERT INTO products (name, price, category, image_url) VALUES (?, ?, ?, ?)");
+                $stmt->execute([$name, $price, $category, $imagePath]);
             }
-        }
+    
+            // UPDATE PRODUCT
+            elseif (isset($_POST['update_product'])) {
+                $id = $_POST['id'];
+                // Fetch current product data
+                $stmt = $pdo->prepare("SELECT * FROM products WHERE id = ?");
+                $stmt->execute([$id]);
+                $product = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        // DELETE PRODUCT
-        elseif (isset($_POST['delete_product'])) {
-            $id = $_POST['delete_id'];
-            $stmt = $pdo->prepare("DELETE FROM products WHERE id = ?");
-            $stmt->execute([$id]);
+                if (!$product) {
+                    // Handle error: product not found
+                    exit('Product not found.');
+                }
+
+                // Use new value if set and not empty, else keep old value
+                $name = !empty($_POST['name']) ? $_POST['name'] : $product['name'];
+                $price = !empty($_POST['price']) ? $_POST['price'] : $product['price'];
+                $category = !empty($_POST['category']) ? $_POST['category'] : $product['category'];
+    
+                if ($imagePath) {
+                    $stmt = $pdo->prepare("UPDATE products SET name = ?, price = ?, category = ?, image_url = ? WHERE id = ?");
+                    $stmt->execute([$name, $price, $category, $imagePath, $id]);
+                } else {
+                    $stmt = $pdo->prepare("UPDATE products SET name = ?, price = ?, category = ? WHERE id = ?");
+                    $stmt->execute([$name, $price, $category, $id]);
+                }
+            }
+    
+            // DELETE PRODUCT
+            elseif (isset($_POST['delete_product'])) {
+                $id = $_POST['delete_id'];
+                $stmt = $pdo->prepare("DELETE FROM products WHERE id = ?");
+                $stmt->execute([$id]);
+            }
+    
+            // No errors, clear any previous error message
+            unset($_SESSION['product_error']);
+    
+        } catch (PDOException $e) {
+            // Check if error code matches foreign key constraint violation on delete (1451)
+            if ($e->getCode() == 23000 && strpos($e->getMessage(), '1451') !== false) {
+                $_SESSION['product_error'] = "Cannot delete this product because it is part of existing orders.";
+            } else {
+                $_SESSION['product_error'] = "Database error: " . $e->getMessage();
+            }
+            header("Location: admindashboardproducts.php");
+            exit();
         }
 
         header("Location: admindashboardproducts.php");
@@ -148,34 +173,57 @@ try {
     elseif (isset($_POST['add_user']) || isset($_POST['update_user']) || isset($_POST['delete_user'])) {
         $pdo = connectDB();
 
-        // ADD USER
-        if (isset($_POST['add_user'])) {
-            $username = $_POST['username'];
-            $email = $_POST['email'];
-            $password = $_POST['password'];
-            $membership = $_POST['membership'];
+        try {
+            // ADD USER
+            if (isset($_POST['add_user'])) {
+                $username = $_POST['username'];
+                $email = $_POST['email'];
+                $password = $_POST['password'];
+                $membership = $_POST['membership'];
 
-            $stmt = $pdo->prepare("INSERT INTO users (username, email, password, membership) VALUES (?, ?, ?, ?)");
-            $stmt->execute([$username , $email, $password, $membership]);
-        }
+                $stmt = $pdo->prepare("INSERT INTO users (username, email, password, membership) VALUES (?, ?, ?, ?)");
+                $stmt->execute([$username , $email, $password, $membership]);
+            }
 
-        // UPDATE USER
-        elseif (isset($_POST['update_user'])) {
-            $id = $_POST['id'];
-            $username = $_POST['username'];
-            $email = $_POST['email'];
-            $password = $_POST['password'];
-            $membership = $_POST['membership'];
+            // UPDATE USER
+            elseif (isset($_POST['update_user'])) {
+                $id = $_POST['id'];
+                // Fetch current user data
+                $stmt = $pdo->prepare("SELECT * FROM users WHERE id = ?");
+                $stmt->execute([$id]);
+                $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-            $stmt = $pdo->prepare("UPDATE users SET username = ?, email = ?, password = ?, membership = ? WHERE id = ?");
-            $stmt->execute([$username, $email, $password, $membership, $id]);
-        }
+                if (!$user) {
+                    // Handle error: user not found
+                    exit('User not found.');
+                }
 
-        // DELETE USER
-        elseif (isset($_POST['delete_user'])) {
-            $id = $_POST['delete_id'];
-            $stmt = $pdo->prepare("DELETE FROM users WHERE id = ?");
-            $stmt->execute([$id]);
+                // Use new value if set and not empty, else keep old value
+                $username = !empty($_POST['username']) ? $_POST['username'] : $user['username'];
+                $email = !empty($_POST['email']) ? $_POST['email'] : $user['email'];
+                $password = !empty($_POST['password']) ? $_POST['password'] : $user['password'];
+                $membership = !empty($_POST['membership']) ? $_POST['membership'] : $user['membership'];
+
+                $stmt = $pdo->prepare("UPDATE users SET username = ?, email = ?, password = ?, membership = ? WHERE id = ?");
+                $stmt->execute([$username, $email, $password, $membership, $id]);
+            }
+
+            // DELETE USER
+            elseif (isset($_POST['delete_user'])) {
+                $id = $_POST['delete_id'];
+                $stmt = $pdo->prepare("DELETE FROM users WHERE id = ?");
+                $stmt->execute([$id]);
+            }
+            // No errors, clear any previous error message
+            unset($_SESSION['user_error']);
+
+        } catch (PDOException $e) {
+            // Save error message in session
+            $_SESSION['user_error'] = "Database error: " . $e->getMessage();
+    
+            // Redirect back to the admin dashboard page to show the error
+            header("Location: admindashboardusers.php");
+            exit();
         }
 
         header("Location: admindashboardusers.php");
@@ -186,8 +234,8 @@ try {
         header("Location: login.php");
         exit();
     }
-// ERROR HANDLING
-} catch (Exception $e) {
+    // ERROR HANDLING
+    } catch (Exception $e) {
     $_SESSION['error'] = $e->getMessage();
     header("Location: login.php");
     exit();

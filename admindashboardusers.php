@@ -13,6 +13,11 @@ if ($_SESSION['user']['usertype'] === 'user') {
     exit();
 }
 
+if (isset($_SESSION['user_error'])) {
+    echo '<div class="error-message" style="color:red; font-weight:bold;">' . htmlspecialchars($_SESSION['user_error']) . '</div>';
+    unset($_SESSION['user_error']);
+}
+
 require_once "functions.php";
 
 // Fetch all users from the database
@@ -124,7 +129,7 @@ unset($_SESSION['error'], $_SESSION['success']);
                 <h2 class="text-xl font-semibold mb-4">Add User</h2>
                 <form action="route.php" method="POST" class="space-y-2">
                     <label>Username:</label>
-                    <input type="text" name="name" required class="w-full border p-2 rounded">
+                    <input type="text" name="username" required class="w-full border p-2 rounded">
 
                     <label>Email:</label>
                     <input type="email" name="email" required class="w-full border p-2 rounded">
@@ -149,14 +154,17 @@ unset($_SESSION['error'], $_SESSION['success']);
             <section class="bg-white p-6 border border-black rounded shadow">
                 <h2 class="text-xl font-semibold mb-4">Update User</h2>
                 <form action="route.php" method="POST" class="space-y-4">
+                    <label>User ID:</label>
+                    <input type="number" name="id" required class="w-full border p-2 rounded">
+
                     <label>Username:</label>
-                    <input type="text" name="name" required class="w-full border p-2 rounded">
+                    <input type="text" name="name" class="w-full border p-2 rounded">
 
                     <label>Email:</label>
-                    <input type="email" name="email" required class="w-full border p-2 rounded">
+                    <input type="email" name="email" class="w-full border p-2 rounded">
 
                     <label>Password:</label>
-                    <input type="password" name="password" required class="w-full border p-2 rounded">
+                    <input type="password" name="password" class="w-full border p-2 rounded">
 
                     <label>Membership:</label>
                     <select name="membership" class="w-full border p-2 rounded">
