@@ -1,16 +1,21 @@
 <?php
 session_start();
+
+// Redirect to login if user not logged in
 if (!isset($_SESSION['user'])) {
     header("Location: login.php");
     exit();
 }
 
+// Redirect admin user to admin dashboard orders page
 if ($_SESSION['user']['usertype'] === 'admin') {
     header("Location: admindashboardorders.php");
     exit();
 }
 
 require_once "functions.php";
+
+// Get all cart items for the logged-in user and count them for cart badge
 $cartItems = getCartItems(); 
 $cartCount = count($cartItems);
 
@@ -30,21 +35,19 @@ $email = htmlspecialchars($_SESSION['user']['email']);
 <body class="font-serif text-black">
     <!-- Navbar -->
     <nav class="bg-white shadow px-4 py-2">
-        <!-- Top Row: Logo + Hamburger -->
         <div class="flex items-center justify-between md:justify-start">
-            <!-- Logo (always left) -->
+            <!-- Logo -->
             <a href="index.php" class="mr-auto">
                 <img src="img/logo.png" alt="logo" class="w-10 h-10 md:w-32 md:h-32">
             </a>
 
-            <!-- Hamburger for mobile -->
+            <!-- Hamburger menu for mobile -->
             <button id= "menu-button"class="md:hidden">
                 <img src="img/menu.png" alt="menu" class="w-6 h-6">
             </button>
 
-            <!-- Desktop Only -->
+            <!-- Desktop menu -->
             <div class="hidden md:flex md:flex-1 md:items-center md:justify-between w-full">
-                <!-- Centered Links -->
                 <div class="flex justify-center space-x-6 mx-auto">
                     <a href="index.php" class="px-3 py-2 hover:bg-gray-200">Home</a>
                     <a href="about.php" class="px-3 py-2 hover:bg-gray-200">About Us</a>
@@ -52,14 +55,14 @@ $email = htmlspecialchars($_SESSION['user']['email']);
                     <a href="membership.php" class="px-3 py-2 hover:bg-gray-200">Membership</a>
                 </div>
 
-                <!-- Right Side Icons -->
+                <!-- Icons -->
                 <div class="flex items-center space-x-6">
                     <a href="userprofile.php">
                         <img src="img/user.png" alt="user" class="w-6 h-6 hover:opacity-75">
                     </a>
                     <a href="cart.php" class="relative">
                         <img src="img/cart.png" class="w-6 h-6">
-                        <span class="absolute -top-2 -right-2 text-xs bg-red-600 text-white rounded-full px-1"><?= $cartCount ?></span>
+                        <span class="absolute -top-2 -right-2 text-xs bg-red-600 text-white rounded-full px-1"><?php echo $cartCount ?></span>
                     </a>
                     <a href="logout.php" class="bg-black text-white px-3 py-1 text-sm rounded hover:bg-gray-800">Logout</a>
                 </div>
@@ -73,7 +76,7 @@ $email = htmlspecialchars($_SESSION['user']['email']);
             <a href="products.php" class="block px-3 py-2 hover:bg-gray-200">Products</a>
             <a href="membership.php" class="block px-3 py-2 hover:bg-gray-200">Membership</a>
             <a href="userprofile.php" class="block px-3 py-2 hover:bg-gray-200">Profile</a>
-            <a href="cart.php" class="block px-3 py-2 hover:bg-gray-200">Cart (<?= $cartCount ?>)</a>
+            <a href="cart.php" class="block px-3 py-2 hover:bg-gray-200">Cart (<?php echo $cartCount ?>)</a>
             <a href="logout.php" class="block px-3 py-2 bg-black text-white rounded text-center hover:bg-gray-800">Logout</a>
         </div>
     </nav>
@@ -81,8 +84,8 @@ $email = htmlspecialchars($_SESSION['user']['email']);
     <!-- My Profile -->
     <section class="my-8 px-4 text-center">
         <h2 class="text-3xl font-bold mb-4">My Profile</h2>
-        <p class="text-xl mb-2 p-2">Username: <?= $username ?></p>
-        <p class="text-xl mb-6">Email: <?= $email ?></p>
+        <p class="text-xl mb-2 p-2">Username: <?php echo $username ?></p>
+        <p class="text-xl mb-6">Email: <?php echo $email ?></p>
 
         <a href="orders.php" class="inline-block bg-black text-white px-6 py-3 rounded hover:bg-gray-800">
             View Order History
@@ -120,8 +123,6 @@ $email = htmlspecialchars($_SESSION['user']['email']);
             </form>
         </div>
     </footer>
-
     <script src="main.js" defer></script>
-    
 </body>
 </html>
